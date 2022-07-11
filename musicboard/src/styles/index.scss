@@ -1,0 +1,123 @@
+/* stylelint-disable scss/at-rule-no-unknown */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	.column-title { @apply tracking-widest text-red-500 bg-black inline px-1 text-xs font-medium }
+	.tile-text { @apply text-lg text-white font-medium }
+	.img-cover { @apply w-full h-full object-cover }
+	.flex-center { @apply flex justify-center items-center }
+}
+
+@mixin gmatrix($col, $row: null) {
+	grid-column: $col; //3/3;
+	@if ($row != null) {
+		grid-row: $row; //1/4;
+	}
+}
+
+$bodyColor: #ddd;
+$mainColor: white;
+$headerColor: $mainColor;
+$footerColor: $mainColor;
+
+// * {
+//    border: 1px solid red;
+// 	background-color: hsl(random(360), random(100), random(30)+60);
+// }
+
+body { background: $bodyColor }
+main { @apply container mx-auto bg-white text-gray-600 px-14 }
+header { background: $headerColor; }
+footer { background: $footerColor; }
+a { cursor: pointer; }
+
+.section {
+	@apply py-20;
+
+	.section__headline { @apply sm:text-3xl text-2xl font-medium mb-2 text-gray-900 }
+
+	.news {
+		//border: 1px solid red;
+		display: grid;
+		grid-template-columns: 5fr 2fr 2fr;
+		grid-template-rows: repeat(3, max(10rem));
+
+		.news__item {
+			border: 1px solid white;
+
+			&--top {
+				grid-row: 1/4;
+				grid-column: 1/2;
+			}
+
+			.news__column { @apply column-title }
+			.news__img { @apply img-cover }
+			.news__desc { @apply relative bg-opacity-75 bg-black -top-[68px] p-2 }
+			.news__text { @apply tile-text }
+		}
+
+		.aside {
+			@apply ml-10;
+			grid-column: 3/3;
+			grid-row: 1/4;
+
+			.trending {
+				.trending__headline { @apply text-xl font-medium text-gray-900 }
+
+				#trending__items, .trending__headline {
+					@apply flex flex-col;
+
+					li {
+						@apply bg-gray-700 border text-white border-white p-[0.51rem];
+
+						&:hover { @apply bg-gray-800 border border-[#333] }
+						h3 { @apply column-title font-bold; }
+						p { font-size: minmax(1rem, 2vw); }
+					}
+				}
+			}
+		}
+	}
+
+	.charts {
+		display: grid;
+		grid-template-columns: repeat(8, 1fr);
+		grid-template-rows: repeat(2, max(10rem));
+		gap: 1rem;
+
+		div { background-color: gray; }
+
+		&__rank1 {
+			grid-column: 1 / 5;
+			grid-row: 1 / 3;
+		}
+
+		&__rank2, &__rank4 { grid-column: 5 / 7; }
+		&__rank3, &__rank5 { grid-column: 7 / 9; }
+
+		.charts__item {
+			img { @apply img-cover }
+
+			.charts__desc {
+				@apply relative -mt-[76px] bg-black bg-opacity-[0.35];
+				
+				&--inline { @apply flex items-center bg-transparent }
+
+				.desc__rank { @apply flex-center w-12 h-12 bg-red-600 text-4xl text-black }
+				.desc__songtitle { @apply tile-text text-3xl px-2 }
+				.desc__interpret { @apply tile-text px-2 text-lg }
+
+				&--top {
+					top: -68px;
+					.desc__rank { @apply w-20 h-20 bg-red-600 text-6xl font-bold text-white }
+				}
+			}
+		}
+	}
+
+	.premium {
+		h2 { @apply text-2xl text-gray-500 font-medium mb-2 }
+	}
+}
