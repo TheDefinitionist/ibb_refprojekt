@@ -131,15 +131,11 @@ const Main = () => {
 					<h1 className="section__headline">PREMIUM</h1>
 				</div>
 				<div className="premium">
-					<h2>Your Premium Perks In A Nutshell</h2>
-					<p className="leading-relaxed text-lg">Taxidermy bushwick celiac master cleanse microdosing seitan. Fashion axe four dollar toast truffaut, direct trade kombucha brunch williamsburg keffiyeh gastropub tousled squid meh taiyaki drinking vinegar tacos.</p>
-					<div className="flex mt-6">
-						<button className="inline-flex text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded">Button</button>
-						<a href="/" className="text-indigo-500 inline-flex items-center ml-4">Learn More
-							<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">
-								<path d="M5 12h14M12 5l7 7-7 7"></path>
-							</svg>
-						</a>
+					<h2>Unlock special contents and more!</h2>
+					<p>Taxidermy bushwick celiac master cleanse microdosing seitan.</p>
+					<div>
+						<button>Subscribe Here</button>
+						{/* <a href="/">Learn More ➤</a> */}
 					</div>
 				</div>
 

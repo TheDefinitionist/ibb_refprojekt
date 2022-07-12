@@ -119,5 +119,13 @@ a { cursor: pointer; }
 
 	.premium {
 		h2 { @apply text-2xl text-gray-500 font-medium mb-2 }
+		p { @apply leading-relaxed text-lg }
+		
+		div {
+			@apply flex mt-6;
+
+			button { @apply inline-flex text-white text-lg uppercase font-bold bg-red-600 border-0 py-2 px-4 focus:outline-none hover:bg-red-700 }
+			a { @apply text-indigo-500 inline-flex items-center ml-4 }
+		}
 	}
 }
