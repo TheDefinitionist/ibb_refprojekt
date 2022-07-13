@@ -8,6 +8,8 @@
 	.tile-text { @apply text-lg text-white font-medium }
 	.img-cover { @apply w-full h-full object-cover }
 	.flex-center { @apply flex justify-center items-center }
+	.cta-red { @apply inline-flex text-white text-lg uppercase font-bold 
+		bg-red-600 border-0 py-2 px-4 focus:outline-none hover:bg-red-700 }
 }
 
 @mixin gmatrix($col, $row: null) {
@@ -17,7 +19,7 @@
 	}
 }
 
-$bodyColor: #ddd;
+$bodyColor: #eee;
 $mainColor: white;
 $headerColor: $mainColor;
 $footerColor: $mainColor;
@@ -29,7 +31,10 @@ $footerColor: $mainColor;
 
 body { background: $bodyColor }
 main { @apply container mx-auto bg-white text-gray-600 px-14 }
-header { background: $headerColor; }
+header { 
+	background: $headerColor; 
+	border-bottom: 1px solid red;
+}
 footer { background: $footerColor; }
 a { cursor: pointer; }
 
@@ -115,17 +120,21 @@ a { cursor: pointer; }
 				}
 			}
 		}
+		button { @apply cta-red }
 	}
 
 	.premium {
-		h2 { @apply text-2xl text-gray-500 font-medium mb-2 }
-		p { @apply leading-relaxed text-lg }
-		
-		div {
-			@apply flex mt-6;
+		@apply flex mt-6;
 
-			button { @apply inline-flex text-white text-lg uppercase font-bold bg-red-600 border-0 py-2 px-4 focus:outline-none hover:bg-red-700 }
+		&__text {
+			align-self: center;
+
+			h2 { @apply text-2xl text-gray-500 font-medium mb-2 }
+			p { @apply leading-relaxed text-lg }
+			button { @apply cta-red }
 			a { @apply text-indigo-500 inline-flex items-center ml-4 }
 		}
+		
+		div > img { @apply img-cover }
 	}
 }

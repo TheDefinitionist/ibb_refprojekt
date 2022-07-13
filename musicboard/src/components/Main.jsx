@@ -13,28 +13,28 @@ const Main = () => {
 				</div>
 				<div className="news">
 					<div className="news__item news__item--top">
-						<img className="news__img" src="./assets/img/img1.jpg" alt="content" />
+						<img className="news__img" src="./assets/img/news/img1.jpg" alt="content" />
 						<div className="news__desc">
 							<h3 className="news__column">MUSIC</h3>
 							<h2 className="news__text">Lacuna Coil World Tour 2022</h2>
 						</div>
 					</div>
 					<div className="news__item">
-						<img className="news__img" src="./assets/img/img2.jpg" alt="content" />
+						<img className="news__img" src="./assets/img/news/img2.jpg" alt="content" />
 						<div className="news__desc">
 							<h3 className="news__column">MUSIC</h3>
 							<h2 className="news__text">Charlez Niér In Amsterdam</h2>
 						</div>
 					</div>
 					<div className="news__item">
-						<img className="news__img" src="./assets/img/img3.jpg" alt="content" />
+						<img className="news__img" src="./assets/img/news/img3.jpg" alt="content" />
 						<div className="news__desc">
 							<h3 className="news__column">CULTURE</h3>
 							<h2 className="news__text">Lorem Ipsum Dolor Sit Amet</h2>
 						</div>
 					</div>
 					<div className="news__item">
-						<img className="news__img" src="./assets/img/img4.jpg" alt="content" />
+						<img className="news__img" src="./assets/img/news/img4.jpg" alt="content" />
 						<div className="news__desc">
 							<h3 className="news__column">MEDIA</h3>
 							<h2 className="news__text">Julia Craik Behind The Scenes</h2>
@@ -72,7 +72,7 @@ const Main = () => {
 
 			<section className="section -mt-20">
 				<div className="mb-10">
-					<h1 className="section__headline">CHARTS</h1>
+					<h1 className="section__headline">TOP 20 CHARTS</h1>
 				</div>
 				<div className="charts">
 					<div className="charts__item charts__rank1">
@@ -123,6 +123,7 @@ const Main = () => {
 							<h3 className="desc__interpret">Lizzo</h3>
 						</div>
 					</div>
+					<button>View Charts</button>
 				</div>
 			</section>
 
@@ -131,11 +132,14 @@ const Main = () => {
 					<h1 className="section__headline">PREMIUM</h1>
 				</div>
 				<div className="premium">
-					<h2>Unlock special contents and more!</h2>
-					<p>Taxidermy bushwick celiac master cleanse microdosing seitan.</p>
-					<div>
+					<div className="premium__text">
+						<h2>Unlock special contents and more!</h2>
+						<p>Taxidermy bushwick celiac master cleanse microdosing seitan.</p><br></br>
 						<button>Subscribe Here</button>
 						{/* <a href="/">Learn More ➤</a> */}
+					</div>
+					<div>
+						<img src="./assets/img/subscribe.png" alt="" />
 					</div>
 				</div>
 

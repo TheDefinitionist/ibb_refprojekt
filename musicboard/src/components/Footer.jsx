@@ -1,40 +1,30 @@
 const Footer = () => (
 	<footer className="text-gray-600">
 		<div className="container px-14 py-24 mx-auto">
-			<div className="flex md:justify-center justify-items flex-wrap md:text-left text-center -mb-10 -mx-4">
-				<div className="md:w-1/4 w-full px-4">
-					<h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">CATEGORIES</h2>
+			<div className="flex justify-center justify-items flex-wrap md:text-left text-center -mb-10 -mx-4">
+				<div className="md:w-1/4 w-full px-4 grid place-items-center">
 					<nav className="list-none mb-10">
-						<li><a href="/" className="text-gray-600 hover:text-gray-800">First Link</a></li>
-						<li><a href="/" className="text-gray-600 hover:text-gray-800">Second Link</a></li>
-						<li><a href="/" className="text-gray-600 hover:text-gray-800">Third Link</a></li>
-						<li><a href="/" className="text-gray-600 hover:text-gray-800">Fourth Link</a></li>
+					<h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3 ">Musicboard</h2>
+						<li><a href="/" className="text-gray-600 hover:text-gray-800">NEWS</a></li>
+						<li><a href="/" className="text-gray-600 hover:text-gray-800">MUSIC</a></li>
+						<li><a href="/" className="text-gray-600 hover:text-gray-800">MEDIA</a></li>
+						<li><a href="/" className="text-gray-600 hover:text-gray-800">CULTURE</a></li>
 					</nav>
 				</div>
-				<div className="md:w-1/4 w-full px-4">
-					<h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">CATEGORIES</h2>
+				<div className="md:w-1/4 w-full px-4 grid place-items-center">
 					<nav className="list-none mb-10">
-						<li><a href="/" className="text-gray-600 hover:text-gray-800">First Link</a></li>
-						<li><a href="/" className="text-gray-600 hover:text-gray-800">Second Link</a></li>
-						<li><a href="/" className="text-gray-600 hover:text-gray-800">Third Link</a></li>
-						<li><a href="/" className="text-gray-600 hover:text-gray-800">Fourth Link</a></li>
+						<h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">Sitemap</h2>
+						<li><a href="/" className="text-gray-600 hover:text-gray-800">Subscribe</a></li>
+						<li><a href="/" className="text-gray-600 hover:text-gray-800">Privacy Policy</a></li>
+						<li><a href="/" className="text-gray-600 hover:text-gray-800">Terms Of Use</a></li>
+						<li><a href="/" className="text-gray-600 hover:text-gray-800">Contact Us</a></li>
 					</nav>
 				</div>
 			</div>
 		</div>
 		<div className="border-t border-gray-200">
-			<div className="container px-5 py-8 flex flex-wrap mx-auto items-center">
-				<div className="flex md:flex-nowrap flex-wrap justify-center items-end md:justify-start">
-					<div className="relative sm:w-64 w-40 sm:mr-4 mr-2">
-						<label htmlFor="footer-field" className="leading-7 text-sm text-gray-600">Placeholder</label>
-						<input type="text" id="footer-field" name="footer-field" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-					</div>
-					<button className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Button</button>
-					<p className="text-gray-500 text-sm md:ml-6 md:mt-0 mt-2 sm:text-left text-center">
-						Bitters chicharrones fanny pack<br className="lg:block hidden" />waistcoat green juice
-					</p>
-				</div>
-				<span className="inline-flex lg:ml-auto lg:mt-0 mt-6 w-full justify-center md:justify-start md:w-auto">
+			<div className="px-5 py-8 grid place-items-center">
+				<span className="inline-flex scale-150">
 					<a href="/" className="text-gray-500">
 						<svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
 							<path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
@@ -61,14 +51,13 @@ const Footer = () => (
 			</div>
 		</div>
 		<div className="bg-gray-100">
-			<div className="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
+			<div className="text-center py-4 px-5">
 				<address>
-					<p className="text-gray-500 text-sm text-center sm:text-left">
+					<p className="text-gray-500 text-sm">
 						MusicBoard &copy; 2022
 						<a href="https://twitter.com/knyttneve" className="text-gray-600" target="_blank" rel="noopener noreferrer">@knyttneve</a>
 					</p>
 				</address>
-				<span className="sm:ml-auto sm:mt-0 mt-2 sm:w-auto w-full sm:text-left text-center text-gray-500 text-sm">Enamel pin tousled raclette tacos irony</span>
 			</div>
 		</div>
 	</footer>
