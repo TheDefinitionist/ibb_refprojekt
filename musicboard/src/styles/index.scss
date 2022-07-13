@@ -1,8 +1,11 @@
 /* stylelint-disable scss/at-rule-no-unknown */
+// Using PostCSS + Tailwing
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+// TY Layers
 @layer base {
 	.column-title { @apply tracking-widest text-red-500 bg-black inline px-1 text-xs font-medium }
 	.tile-text { @apply text-lg text-white font-medium }
@@ -12,6 +15,13 @@
 		bg-red-600 border-0 py-2 px-4 focus:outline-none hover:bg-red-700 }
 }
 
+// Variables
+$bodyColor: #eee;
+$mainColor: white;
+$headerColor: $mainColor;
+$footerColor: $mainColor;
+
+// Mixins
 @mixin gmatrix($col, $row: null) {
 	grid-column: $col; //3/3;
 	@if ($row != null) {
@@ -19,16 +29,7 @@
 	}
 }
 
-$bodyColor: #eee;
-$mainColor: white;
-$headerColor: $mainColor;
-$footerColor: $mainColor;
-
-// * {
-//    border: 1px solid red;
-// 	background-color: hsl(random(360), random(100), random(30)+60);
-// }
-
+// Main Styles
 body { background: $bodyColor }
 main { @apply container mx-auto bg-white text-gray-600 px-14 }
 header { 
@@ -38,11 +39,13 @@ header {
 footer { background: $footerColor; }
 a { cursor: pointer; }
 
+// Sections
 .section {
 	@apply py-20;
 
 	.section__headline { @apply sm:text-3xl text-2xl font-medium mb-2 text-gray-900 }
 
+	// News
 	.news {
 		//border: 1px solid red;
 		display: grid;
@@ -63,6 +66,7 @@ a { cursor: pointer; }
 			.news__text { @apply tile-text }
 		}
 
+		// Trending
 		.aside {
 			@apply ml-10;
 			grid-column: 3/3;
@@ -86,6 +90,7 @@ a { cursor: pointer; }
 		}
 	}
 
+	// Charts
 	.charts {
 		display: grid;
 		grid-template-columns: repeat(8, 1fr);
@@ -123,6 +128,7 @@ a { cursor: pointer; }
 		button { @apply cta-red }
 	}
 
+	// Premium
 	.premium {
 		@apply flex mt-6;
 
