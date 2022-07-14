@@ -1,12 +1,12 @@
-import Utils from "./../utils"
+import Modifier from "./../utilities/modifier"
 
-Utils.setMax(50)
-const short = Utils.shorten
+Modifier.setMax(50)
+const short = Modifier.shorten
 
 const Main = () => {
 
 	return (
-		<main>
+		<>
 			<section className="section -mt-5">
 				<div className="mb-10">
 					<h1 className="section__headline">NEWS</h1>
@@ -142,10 +142,9 @@ const Main = () => {
 						<img src="./assets/img/subscribe.png" alt="" />
 					</div>
 				</div>
-
 			</section>
-		</main >
+		</>
 	)
 }
 
-export default Main
+export { Main }

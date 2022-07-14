@@ -1,4 +1,4 @@
-// Utils.js
+// Modifier.js
 
 class Utils {
 
