@@ -137,7 +137,7 @@ const Home = () => {
 					<div className="premium__text">
 						<h2>Unlock special contents and more!</h2>
 						<p>Taxidermy bushwick celiac master cleanse microdosing seitan.</p><br></br>
-						<button>Subscribe Here</button>
+						<button id="subscribe">Subscribe Here</button>
 						{/* <a href="/">Learn More ➤</a> */}
 					</div>
 					<div>

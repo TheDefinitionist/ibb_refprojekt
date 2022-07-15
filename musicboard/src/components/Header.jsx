@@ -3,8 +3,8 @@ import { Link } from "react-router-dom"
 const Header = () => {
    return (
       <header>
-         <div>
-            <Link to="/" className="home">
+         <div className="header-wrapper">
+            <Link to="/" id="home">
                <img className="logo" src="assets/img/logo.svg" alt="MusicBoard Logo" title="MusicBoard" />
                <h1 className="">MusicBoard</h1>
             </Link>
@@ -18,7 +18,7 @@ const Header = () => {
             </nav>
             <Link className="login" to="/login">Login</Link> |
             <Link className="register" to="/register">Register</Link>
-            <button onClick={()=> alert('hi')}>
+            <button className="subscribe" onClick={()=> alert('hi')}>
                <i className="fa-solid fa-crown"></i>&nbsp;PREMIUM
             </button>
          </div>
