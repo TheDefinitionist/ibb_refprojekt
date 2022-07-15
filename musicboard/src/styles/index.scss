@@ -1,13 +1,12 @@
 /* stylelint-disable scss/at-rule-no-unknown */
-// Using PostCSS + Tailwing
 
+// Style Reset
+* { @apply box-border m-0 p-0 }
+
+// Using PostCSS + TailwinD
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-// * {
-// 	border: solid 1px red;
-// }
 
 // TY Layers
 @layer base {
@@ -30,28 +29,63 @@ $footerColor: $mainColor;
 	grid-column: $col; //3/3;
 	@if ($row != null) {
 		grid-row: $row; //1/4;
+	} @else {
+		grid-row: 1;
 	}
 }
 
 // Main Styles
 body { background: $bodyColor }
 main { @apply container mx-auto bg-white text-gray-600 px-14 }
-header { 
-	background: $headerColor; 
-	border-bottom: 1px solid red;
-}
 footer { background: $footerColor; }
-a { cursor: pointer; }
+
+a { 
+	cursor: pointer;
+	&.link { @apply text-red-500 hover:bg-gray-200 }
+}
+
+// Header
+header {
+	@apply container mx-auto text-gray-600 px-6 border-b-[1px] border-red-500 mb-7;
+	background: $headerColor;
+
+	div {
+		@apply flex flex-wrap flex-row items-center m-4 pt-5;
+
+		.home {
+			@apply flex font-medium items-center text-gray-900 mb-0;
+
+			h1 { @apply ml-3 text-xl }
+			.logo { @apply w-12 h-12 text-white }
+		}
+
+		nav {
+			@apply ml-auto mr-auto flex flex-wrap items-center text-base justify-center;
+
+			#navbar {
+				@apply flex;
+				li > * { @apply mr-5 tracking-widest hover:bg-gray-200 hover:text-red-700 p-4 }
+			}
+		}
+
+		.login { @apply inline-flex items-center border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 text-base mt-0 }
+		.register { @apply font-bold text-red-500 p-2 focus:outline-none hover:text-black }
+
+		button {
+			@apply cta-red focus:outline-none py-0 px-2;
+			.fa-crown { @apply scale-110 translate-y-1 }
+		}
+	}
+}
 
 // Sections
 .section {
 	@apply py-20;
 
-	.section__headline { @apply sm:text-3xl text-2xl font-medium mb-2 text-gray-900 }
+	.section__headline { @apply text-3xl font-medium mb-2 text-gray-900 }
 
 	// News
 	.news {
-		//border: 1px solid red;
 		display: grid;
 		grid-template-columns: 5fr 2fr 2fr;
 		grid-template-rows: repeat(3, max(10rem));

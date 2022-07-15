@@ -57,7 +57,7 @@ const Footer = () => (
 				<address>
 					<p className="text-gray-500 text-sm">
 						MusicBoard &copy; 2022&nbsp;
-						<a href="https://twitter.com/knyttneve" className="text-gray-600" target="_blank" rel="noopener noreferrer">@knyttneve</a>
+						<a href="https://twitter.com/knyttneve" className="link" target="_blank" rel="noopener noreferrer">@knyttneve</a>
 					</p>
 				</address>
 			</div>

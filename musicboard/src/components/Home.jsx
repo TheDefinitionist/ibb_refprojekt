@@ -9,7 +9,7 @@ const Home = () => {
 		<>
 			<section className="section -mt-5">
 				<div className="mb-10">
-					<h1 className="section__headline">HOME/NEWS</h1>
+					<h1 className="section__headline">HOME</h1>
 				</div>
 				<div className="news">
 					<div className="news__item news__item--top">
