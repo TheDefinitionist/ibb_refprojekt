@@ -1,15 +1,15 @@
-import Modifier from "./../utilities/modifier"
+import Modifier from "../utilities/modifier"
 
 Modifier.setMax(50)
 const short = Modifier.shorten
 
-const Main = () => {
+const Home = () => {
 
 	return (
 		<>
 			<section className="section -mt-5">
 				<div className="mb-10">
-					<h1 className="section__headline">NEWS</h1>
+					<h1 className="section__headline">HOME/NEWS</h1>
 				</div>
 				<div className="news">
 					<div className="news__item news__item--top">
@@ -123,6 +123,8 @@ const Main = () => {
 							<h3 className="desc__interpret">Lizzo</h3>
 						</div>
 					</div>
+				</div>
+				<div className="charts__button">
 					<button>View Charts</button>
 				</div>
 			</section>
@@ -147,4 +149,4 @@ const Main = () => {
 	)
 }
 
-export { Main }
+export { Home }

@@ -5,6 +5,10 @@
 @tailwind components;
 @tailwind utilities;
 
+// * {
+// 	border: solid 1px red;
+// }
+
 // TY Layers
 @layer base {
 	.column-title { @apply tracking-widest text-red-500 bg-black inline px-1 text-xs font-medium }
@@ -97,7 +101,7 @@ a { cursor: pointer; }
 		grid-template-rows: repeat(2, max(10rem));
 		gap: 1rem;
 
-		div { background-color: gray; }
+		div:not(.charts__button) { background-color: gray; }
 
 		&__rank1 {
 			grid-column: 1 / 5;
@@ -125,7 +129,11 @@ a { cursor: pointer; }
 				}
 			}
 		}
-		button { @apply cta-red }
+		
+	}
+	.charts__button {
+		@apply text-center;
+		button { @apply cta-red mt-4 }
 	}
 
 	// Premium
