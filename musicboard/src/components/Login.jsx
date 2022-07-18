@@ -1,7 +1,10 @@
-//import { useRef, useState, useLocation } from react
+import { useRef, useState, useEffect } from react
 import { Link } from "react-router-dom"
 
 const Login = () => {
+
+	const 
+		userRef = useRef()
 
 	return (
 		<>

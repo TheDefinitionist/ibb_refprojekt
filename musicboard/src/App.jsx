@@ -10,8 +10,6 @@ import { Login } from './components/Login'
 import Footer from './components/Footer'
 import './styles/index.scss'
 
-
-
 const App = () => {
 
 	return (
