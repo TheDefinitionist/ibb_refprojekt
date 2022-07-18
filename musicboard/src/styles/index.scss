@@ -187,6 +187,18 @@ header {
 		
 		div > img { @apply img-cover }
 	}
+
+	.login {
+		.loginform {
+			@apply w-60;
+			display: grid;
+
+			#login {
+				@apply cta-red inline mt-5;
+			}
+			
+		}
+	}
 }
 
 // Footer
