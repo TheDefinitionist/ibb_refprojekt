@@ -3,8 +3,16 @@ import { Link } from "react-router-dom"
 
 const Login = () => {
 
-	const 
-		userRef = useRef()
+	const userRef = useRef()
+	const errRef = useRef()
+
+	const abc = 'def'
+
+	let def = 12
+
+	errRef().test()
+
+	abc.blah = null || false || true
 
 	return (
 		<>
