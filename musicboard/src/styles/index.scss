@@ -153,19 +153,19 @@ header {
 			.charts__desc {
 				@apply relative -mt-[76px] bg-black bg-opacity-[0.35];
 				
-				&--inline { @apply flex items-center bg-transparent }
-
+				
 				.desc__rank { @apply flex-center w-12 h-12 bg-red-600 text-4xl text-black }
 				.desc__songtitle { @apply tile-text text-3xl px-2 }
 				.desc__interpret { @apply tile-text px-2 text-lg }
-
-				&--top {
-					top: -68px;
-					.desc__rank { @apply w-20 h-20 bg-red-600 text-6xl font-bold text-white }
+				&-- {
+					&inline { @apply flex items-center bg-transparent }
+					&top {
+						top: -68px;
+						.desc__rank { @apply w-20 h-20 bg-red-600 text-6xl font-bold text-white }
+					}
 				}
 			}
 		}
-		
 	}
 	.charts__button {
 		@apply text-center;
@@ -175,60 +175,50 @@ header {
 	// Premium
 	.premium {
 		@apply flex mt-6;
-
 		&__text {
 			align-self: center;
-
 			h2 { @apply text-2xl text-gray-500 font-medium mb-2 }
 			p { @apply leading-relaxed text-lg }
 			button#subscribe { @apply cta-red }
 			a { @apply text-indigo-500 inline-flex items-center ml-4 }
 		}
-		
 		div > img { @apply img-cover }
 	}
 
 	.login {
-		.loginform {
+		&__form {
 			@apply w-60;
 			display: grid;
-
 			#login {
 				@apply cta-red inline mt-5;
 			}
-			
 		}
 	}
 }
 
 // Footer
 footer {
-	background: $footerColor;
 
 	// Sitemap
 	#sitemap {
-		@apply container px-14 py-24 mx-auto;
-		
+		@apply container px-14 py-24 mx-auto bg-white border-t-[1px] border-red-500 mt-2;
 		.sitemap__wrapper {
 			@apply flex justify-center flex-wrap text-left -mb-10 -mx-4;
-
 			nav {
 				@apply list-none mb-10 px-10 grid;
 				h2 { @apply font-medium text-gray-900 tracking-widest text-lg mb-3 }
-				a { @apply text-gray-600 hover:text-gray-800 hover:bg-gray-200 }
+				a { @apply text-gray-600 hover:text-red-500 hover:bg-gray-200 }
 			}
 		}
 	}
 
 	// Social Links
 	#social-links {
-		@apply border-t border-gray-200 px-5 py-8 flex justify-center;
-
+		@apply px-5 py-8 flex justify-center;
 		.social-links__wrapper {
 			@apply inline-flex scale-150;
-
 			a {
-				@apply text-gray-500 p-2 hover:bg-gray-200;
+				@apply text-gray-500 p-2 hover:bg-gray-200 hover:text-red-500;
 				svg { @apply w-5 h-5 }
 			}
 		}
