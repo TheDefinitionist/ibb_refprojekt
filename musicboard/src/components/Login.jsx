@@ -43,17 +43,26 @@ const
 
 				console.log(JSON.stringify(response?.data))
 
-				const 
-					accessToken = response?.data.accessToken,
-					roles = response?.data?.roles
+				const accessToken = response?.data.accessToken
 				
-				setAuth({ user, pwd, roles, accessToken})
-
+				setAuth({ user, pwd, accessToken})
 				setUser("")
 				setPwd("")
 				setSuccess(true)
 			} catch (err) {
+				let error = err?.response
 
+				if (!error) {
+					setErrMsg('No Server Response')
+				} else if (error?.status === 400) {
+					setErrMsg('Missing Username or Password')
+				} else if (error?.status === 401) {
+					setErrMsg('Unauthorized')
+				} else {
+					setErrMsg('Login Failed')
+				}
+
+				errRef.current.focus()
 			}
 
 
