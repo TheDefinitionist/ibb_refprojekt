@@ -7,6 +7,7 @@ import { Music } from './components/Music'
 import { Culture } from './components/Culture'
 import { Media } from './components/Media'
 import { Login } from './components/Login'
+import { Register } from './components/Register'
 import Footer from './components/Footer'
 import './styles/index.scss'
 
@@ -23,8 +24,8 @@ const App = () => {
 					<Route path="/culture" element={<Culture />} />
 					<Route path="/media" element={<Media />} />
 					<Route path="/login" element={<Login />} />
-					{/*<Route path="/logout" element={<Logout />} />
 					<Route path="/register" element={<Register />} />
+					{/*<Route path="/logout" element={<Logout />} />
 					<Route path="/subscribe" element={<Subscribe />} />
 					<Route path="/account" element={<Account />} />*/}
 				</Routes>

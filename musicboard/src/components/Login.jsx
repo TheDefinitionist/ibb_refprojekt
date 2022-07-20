@@ -1,76 +1,81 @@
 // Login
 
-import { useRef, useState, useEffect, useContext } from "react"
-import { Link } from "react-router-dom"
-import AuthContext from ".././context/AuthProvider"
-import axios from ".././utilities/axios"
+import { useRef, useState, useEffect, useContext } from 'react'
+import { Link } from 'react-router-dom'
+import AuthContext from '.././context/AuthProvider'
+import axios from '.././utilities/axios'
+
 
 const
-	LOGIN_URL = "/auth",
+	// Authentification endpoint
+	LOGIN_URL = '/auth',
 
+
+	// Login component
 	Login = () => {
 
 		const
 			// Global state variables
 			{ setAuth } = useContext(AuthContext),
 
-			// References for the form
-			userRef = useRef(),
-			errRef = useRef(),
-
 			// State variables
 			[user, setUser] = useState(''),
 			[pwd, setPwd] = useState(''),
 			[errMsg, setErrMsg] = useState(''),
-			[success, setSuccess] = useState(false)
+			[success, setSuccess] = useState(false),
 
-		// After pageload
+			// Reference for the 'username' input field
+			userRef = useRef()
+
+		// Operations after pageload
+		// Autofocus on 'username' input field
 		useEffect(() => userRef.current.focus(), [])
-		useEffect(() => setErrMsg(''), [user, pwd])
+		// Clear error message when 'user' or 'pwd' state change
+		useEffect(() => setErrMsg(""), [user, pwd]) 
 
-		const handleSubmit = async (e) => {
+		// Submit handler
+		const submit = async (e) => {
 			e.preventDefault()
 
 			try {
 
-				const response = await axios.post(LOGIN_URL, 
-					JSON.stringify({user, pwd}),
+				// Connect and send data to the authentification endpoint
+				const response = await axios.post(LOGIN_URL, JSON.stringify({user, pwd}),
 					{
-						headers: { "Content-Type": "applications/json"},
+						headers: { 'Content-Type': 'applications/json'},
 						withCredentials: true
 					}
 				)
-
+				
+				// [Debug] Display the returned data
 				console.log(JSON.stringify(response?.data))
-
+				
+				// Get access token
 				const accessToken = response?.data.accessToken
 				
-				setAuth({ user, pwd, accessToken})
+				// Set global state variables with the data requested from the endpoint
+				setAuth({ user, pwd, accessToken })
+
+				// Clear the states in the UI and grand success
 				setUser("")
 				setPwd("")
 				setSuccess(true)
 			} catch (err) {
 				let error = err?.response
 
-				if (!error) {
-					setErrMsg('No Server Response')
-				} else if (error?.status === 400) {
-					setErrMsg('Missing Username or Password')
-				} else if (error?.status === 401) {
-					setErrMsg('Unauthorized')
-				} else {
-					setErrMsg('Login Failed')
-				}
-
-				errRef.current.focus()
+				// Error handling
+				if (!error) setErrMsg("No Server Response") 
+				else if (error?.status === 400) setErrMsg("Missing Username or Password")
+				else if (error?.status === 401) setErrMsg("Unauthorized")
+				else setErrMsg("Login Failed")
 			}
-
-
 		}
 
+		// Returned content
 		return (
 			<section className="section -mt-5">
-				{success ? (
+
+				{success ? ( // if logged in
 					<>
 						<div className="mb-10">
 							<h1 className="section__headline">Customer Panel</h1>
@@ -79,24 +84,26 @@ const
 							<p>You are logged in!</p>
 						</div>
 					</>
-				) : (
+
+				) : ( // if not logged in
 					<>
 						<div className="mb-10">
 							<h1 className="section__headline">LOG IN</h1>
 						</div>
 						<div className="login">
-							<p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}>{errMsg}</p>
-							<form className="login__form" onSubmit={handleSubmit}>
+							
+							<form className="login__form" onSubmit={submit}>
 								<label htmlFor="username">Username</label>
 								<input className="border-4" type="text" id="username"
-									ref={userRef} onChange={(e) => setUser(e.target.value)} value={user} required
+									ref={userRef} onChange={e => setUser(e.target.value)} required
 								/>
 								<label htmlFor="password">Password</label>
 								<input className="border-4" type="password" id="password"
-									onChange={(e) => setPwd(e.target.value)} value={pwd} required
+									onChange={e => setPwd(e.target.value)} required
 								/>
 								<input id="login" type="submit" value="Log In" />
-							</form><br />
+							</form>
+							<p className={errMsg && "errmsg"}>{errMsg}</p><br />
 							<p>
 								<Link className="link" to="/forgotpw">➤ Forgot Password?</Link><br />
 								<Link className="link" to="/register">➤ Register</Link>
@@ -104,6 +111,7 @@ const
 						</div>
 					</>
 				)}
+
 			</section>
 		)
 	}
