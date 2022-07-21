@@ -198,8 +198,13 @@ header {
 			}
 		}
 		.instructions {
+			@apply font-semibold;
 			p {
-				span.checkrgx { color: red; }
+				span {
+					&.checkrgx--true { color: green; }
+					&.checkrgx--false { color: red; }
+					.instructions__facheck * { @apply inline }
+				}
 			}
 		}
 	}

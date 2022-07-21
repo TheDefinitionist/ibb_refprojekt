@@ -5,10 +5,10 @@ import { FaCheck, FaTimes, FaCircle } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 
-// Input validation
+// Regex validation
 const
-	USER_RGX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/,
-	PWD_RGX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{4,24}$/,
+	USER_RGX = /^[a-zA-Z][a-zA-Z0-9-_]{4,18}$/,
+	PWD_RGX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,24}$/,
 
 
 	// Register component
@@ -19,48 +19,49 @@ const
 			userRef = useRef(), errRef = useRef(),
 
 			// Form states
-			[user, setUser] = useState(""),
+			[user, setUser] = useState(""), 
 			[pwd, setPwd] = useState(""),
-			[matchPwd, setMatchPwd] = useState(""),
-			[errMsg, setErrMsg] = useState("")
+			[matchPwd, setMatchPwd] = useState(""), 
+			[errMsg, setErrMsg] = useState(""),
+
+			// states for checking Regex
+			[mustInclude, setMustInclude] = useState({
+				lower: false, upper: false,
+				number: false, special: false
+			})
 
 		const
 			// Form validation
-			[validName, setValidName] = useState(false),
+			[validName, setValidName] = useState(false), 
 			[validPwd, setValidPwd] = useState(false),
 			[validMatch, setValidMatch] = useState(false),
 
 			// Registration complete
 			[success, setSuccess] = useState(false)
 
-		// Check button status
-		let invalid = !validName || !validPwd || !validMatch
-
-		// Check which characters are still missing
-		const mustInclude = () => {
-			if (invalid && pwd) {
-				return {
-					lower: !/[a-z]/.test(pwd),
-					upper: !/[A-Z]/.test(pwd),
-					number: !/[0-9]/.test(pwd),
-					special: !/[\!\@\#\$\%]/.test(pwd)
-				}
-			}
-		}
-
 		// Operations after pageload
 		// Autofocus on 'username' input field
 		useEffect(() => userRef.current.focus(), [])
+
 		// Check 'username' validation
 		useEffect(() => setValidName(USER_RGX.test(user)), [user])
 
-		//useEffect(() => mustInclude(pwd), [pwd])
+		// Check which characters are still missing
+		useEffect(() => {
+			setMustInclude({
+				lower: /[a-z]/.test(pwd),
+				upper: /[A-Z]/.test(pwd),
+				number: /[0-9]/.test(pwd),
+				special: /[\!\@\#\$\%]/.test(pwd)
+			})
+		}, [pwd])
 
 		// Check 'password' validation and if it matches
 		useEffect(() => {
 			setValidPwd(PWD_RGX.test(pwd))
 			setValidMatch(pwd === matchPwd)
 		}, [pwd, matchPwd])
+		
 		// Clear error message every time when form states change
 		useEffect(() => setErrMsg(""), [user, pwd, matchPwd])
 
@@ -77,7 +78,7 @@ const
 			setSuccess(true)
 
 			/*try {
-
+	
 				// Connect and send data to the authentification endpoint
 				const response = await axios.post(LOGIN_URL, JSON.stringify({user, pwd}),
 					{
@@ -94,14 +95,14 @@ const
 				
 				// Set global state variables with the data requested from the endpoint
 				setAuth({ user, pwd, accessToken })
-
+	
 				// Clear the states in the UI and grand success
 				setUser("")
 				setPwd("")
 				setSuccess(true)
 			} catch (err) {
 				let error = err?.response
-
+	
 				// Error handling
 				if (!error) setErrMsg("No Server Response") 
 				else if (error?.status === 400) setErrMsg("Missing Username or Password")
@@ -109,6 +110,12 @@ const
 				else setErrMsg("Login Failed")
 			}*/
 		}
+
+		// Small shortcuts
+		const 
+			incl = mustInclude,
+			// Check button status
+			invalid = !validName || !validPwd || !validMatch
 
 		// Rendered content
 		return (
@@ -148,14 +155,25 @@ const
 									disabled={invalid ? true : false}
 								/><br></br>
 								<p className={errMsg && "errmsg"}>{errMsg}</p>
-							<p className="text-s">Do you already have an account?<br /><Link className="link" to="/login">➤ Login</Link></p>
+								<p className="text-s">Do you already have an account?<br /><Link className="link" to="/login">➤ Login</Link></p>
 							</form><br />
 							<div className="instructions">
-								<p>Password must include at least 1:<br />
-									<span className={()=> mustInclude.check.lower ? "checkrgx" : ""}>➤ lowercase character</span><br />
-									<span className="checkrgx">➤ uppercase character</span><br />
-									<span className="checkrgx">➤ number</span><br />
-									<span className="checkrgx">➤ special character</span><br />
+								<p>Password must include at least:<br />
+									<span className={incl.lower ? "checkrgx--true" : "checkrgx--false"}>
+										<span className="instructions__facheck">{incl.lower ? <FaCheck /> : <FaTimes />}</span> 1 lowercase character (a-z)
+									</span><br />
+									<span className={incl.upper ? "checkrgx--true" : "checkrgx--false"}>
+										<span className="instructions__facheck">{incl.upper ? <FaCheck /> : <FaTimes />}</span> 1 uppercase character (A-Z)
+									</span><br />
+									<span className={incl.number ? "checkrgx--true" : "checkrgx--false"}>
+										<span className="instructions__facheck">{incl.number ? <FaCheck /> : <FaTimes />}</span> 1 number (0-9)
+									</span><br />
+									<span className={incl.special ? "checkrgx--true" : "checkrgx--false"}>
+										<span className="instructions__facheck">{incl.special ? <FaCheck /> : <FaTimes />}</span> 1 special character (!@$#%)
+									</span><br />
+									<span className={incl.minmax ? "checkrgx--true" : "checkrgx--false"}>
+										<span className="instructions__facheck">{incl.minmax ? <FaCheck /> : <FaTimes />}</span> 6 characters and a maximum of 24
+									</span><br />
 								</p>
 							</div>
 						</div>
