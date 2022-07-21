@@ -71,7 +71,7 @@ const
 			}
 		}
 
-		// Returned content
+		// Rendered content
 		return (
 			<section className="section -mt-5">
 
@@ -103,8 +103,9 @@ const
 								/>
 								<input id="login" type="submit" value="Log In" />
 							</form>
+
 							<p className={errMsg && "errmsg"}>{errMsg}</p><br />
-							<p>
+							<p className="text-sm">
 								<Link className="link" to="/forgotpw">➤ Forgot Password?</Link><br />
 								<Link className="link" to="/register">➤ Register</Link>
 							</p>

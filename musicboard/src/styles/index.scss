@@ -185,14 +185,21 @@ header {
 		div > img { @apply img-cover }
 	}
 
-	.login {
-		@apply w-60;
+	.login,.register {
+		display: flex;
+		gap: 10px;
 		.errmsg { @apply text-red-600 bg-red-100 border-2 border-red-500 p-2 mb-2 }
 		.succmsg { @apply text-green-600 bg-green-100 border-2 border-green-500 p-2 mb-2 }
 		&__form {
 			display: grid;
-			#login {
+			#login,#register {
 				@apply cta-red inline mt-5;
+				&.disabled { @apply opacity-[0.65] cursor-not-allowed }
+			}
+		}
+		.instructions {
+			p {
+				span.checkrgx { color: red; }
 			}
 		}
 	}
