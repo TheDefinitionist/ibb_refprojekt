@@ -3,12 +3,14 @@
 import { useRef, useState, useEffect } from 'react'
 import { FaCheck, FaTimes, FaCircle } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import axios from '.././utilities/axios'
 
 
 // Regex validation
 const
-	USER_RGX = /^[a-zA-Z][a-zA-Z0-9-_]{4,24}$/,
+	USER_RGX = /^[a-zA-Z][a-zA-Z0-9-_]{3,24}$/,
 	PWD_RGX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{4,24}$/,
+	REGISTER_URL = "/register",
 
 
 	// Register component
@@ -16,26 +18,21 @@ const
 
 		const
 			// Form references
-			userRef = useRef(), errRef = useRef(),
-
+			userRef = useRef(),
 			// Form states
 			[user, setUser] = useState(""), 
 			[pwd, setPwd] = useState(""),
 			[matchPwd, setMatchPwd] = useState(""), 
 			[errMsg, setErrMsg] = useState(""),
-
 			// states for checking Regex
 			[mustInclude, setMustInclude] = useState({
 				lower: false, upper: false, minmax: false,
 				number: false, special: false
-			})
-
-		const
+			}),
 			// Form validation
 			[validName, setValidName] = useState(false), 
 			[validPwd, setValidPwd] = useState(false),
 			[validMatch, setValidMatch] = useState(false),
-
 			// Registration complete
 			[success, setSuccess] = useState(false)
 
@@ -46,7 +43,6 @@ const
 			// Check 'password' validation and if it matches
 			setValidPwd(PWD_RGX.test(pwd))
 			setValidMatch(pwd === matchPwd)
-
 			// Check 'username' validation
 			setValidName(USER_RGX.test(user))
 			// Additionally Check which characters are still missing
@@ -57,7 +53,6 @@ const
 				number: /[0-9]/.test(pwd),
 				special: /[\!\@\#\$\%]/.test(pwd)
 			})
-
 			// Clear error message every time when form states change
 			setErrMsg("")
 		}, [user, pwd, matchPwd])
@@ -65,47 +60,31 @@ const
 		// Submit to register
 		const submit = async e => {
 			e.preventDefault()
-
-			// Extra button condition against JS hack
-			if (!USER_RGX.test(user) || !PWD_RGX.test(pwd)) {
+			// Extra condition against JS hack
+			if (!validName || !validPwd) {
 				setErrMsg("Invalid Entry")
+				return
 			}
-
-			console.log(user, pwd)
-			setSuccess(true)
-
-			/*try {
-	
-				// Connect and send data to the authentification endpoint
-				const response = await axios.post(LOGIN_URL, JSON.stringify({user, pwd}),
+			try {
+				const response = await axios.post(REGISTER_URL, 
+					JSON.stringify({ username: user, password: pwd }),
 					{
 						headers: { 'Content-Type': 'applications/json'},
 						withCredentials: true
 					}
 				)
-				
-				// [Debug] Display the returned data
-				console.log(JSON.stringify(response?.data))
-				
-				// Get access token
-				const accessToken = response?.data.accessToken
-				
-				// Set global state variables with the data requested from the endpoint
-				setAuth({ user, pwd, accessToken })
-	
-				// Clear the states in the UI and grand success
-				setUser("")
-				setPwd("")
 				setSuccess(true)
+				// [Debug]
+				/*console.log(response.data)
+				console.log(response.accessToken)
+				console.log(JSON.stringify(response))*/
 			} catch (err) {
-				let error = err?.response
-	
 				// Error handling
+				let error = err?.response
 				if (!error) setErrMsg("No Server Response") 
-				else if (error?.status === 400) setErrMsg("Missing Username or Password")
-				else if (error?.status === 401) setErrMsg("Unauthorized")
-				else setErrMsg("Login Failed")
-			}*/
+				else if (error?.status === 409) setErrMsg("Username Taken")
+				else setErrMsg("Registration Failed")
+			}
 		}
 
 		// Small shortcuts
@@ -114,7 +93,8 @@ const
 			// Check button status
 			invalid = !validName || !validPwd || !validMatch,
 			// Classes
-			rgx = ['checkrgx--false', 'checkrgx--true'] 
+			rgx = ['checkrgx--false', 'checkrgx--true'],
+			valid = <FaCheck />
 
 		// Rendered content
 		return (
@@ -131,34 +111,36 @@ const
 					</>
 
 				) : ( // if unregistered
-
 					<>
 						<div className="mb-10">
 							<h1 className="section__headline">REGISTER</h1>
 						</div>
 						<div className="register">
+							
 							<form className="register__form" onSubmit={submit}>
-								<label htmlFor="username">Username</label>
+								<label htmlFor="username">Username {validName && valid}</label>
 								<input className="border-4" type="text" id="username"
 									ref={userRef} onChange={e => setUser(e.target.value)} required
 								/>
-								<label htmlFor="password">Password</label>
+								<label htmlFor="password">Password {validPwd && valid}</label>
 								<input className="border-4" type="password" id="password"
 									onChange={(e) => setPwd(e.target.value)} required
 								/>
-								<label htmlFor="confirm_pwd">Confirm Password</label>
+								<label htmlFor="confirm_pwd">Confirm Password {matchPwd && validMatch && valid}</label>
 								<input className="border-4" type="password" id="confirm_pwd"
-									onChange={e => setMatchPwd(e.target.value)} required
+									onChange={(e) => setMatchPwd(e.target.value)} required
 								/>
 								<input id="register" value="Register" type="submit"
 									className={invalid ? "disabled" : null}
 									disabled={invalid ? true : false}
 								/><br></br>
 								<p className={errMsg && "errmsg"}>{errMsg}</p>
-								<p className="text-s">Do you already have an account?<br /><Link className="link" to="/login">➤ Login</Link></p>
+								<p>Do you already have an account?<br /><Link className="link" to="/login">➤ Login</Link></p>
 							</form><br />
+
 							<div className="instructions">
-								<p>Password must include at least:<br />
+								<p>Username can contain uppercase (A),<br />lowercase letters(a), numbers(0)<br />as well as underscores and hyphens</p><br />
+									<p>Password must include at least:<br />
 									<span className={incl.lower ? rgx[1] : rgx[0]}>
 										<span className="instructions__facheck">{incl.lower ? <FaCheck /> : <FaTimes />}</span> 1 lowercase character (a-z)
 									</span><br />

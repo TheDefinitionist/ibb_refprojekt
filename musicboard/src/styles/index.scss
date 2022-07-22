@@ -187,18 +187,20 @@ header {
 
 	.login,.register {
 		display: flex;
-		gap: 10px;
+		gap: 15px;
 		.errmsg { @apply text-red-600 bg-red-100 border-2 border-red-500 p-2 mb-2 }
 		.succmsg { @apply text-green-600 bg-green-100 border-2 border-green-500 p-2 mb-2 }
 		&__form {
 			display: grid;
+			grid-template-columns: 250px;
+			label > span { @apply text-green-500 font-bold }
 			#login,#register {
 				@apply cta-red inline mt-5;
-				&.disabled { @apply opacity-[0.65] cursor-not-allowed }
+				&.disabled { @apply opacity-[0.5] cursor-not-allowed }
 			}
 		}
 		.instructions {
-			@apply font-semibold;
+			@apply text-sm;
 			p {
 				span {
 					&.checkrgx--true { color: green; }

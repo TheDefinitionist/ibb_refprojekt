@@ -99,16 +99,17 @@ const
 								/>
 								<label htmlFor="password">Password</label>
 								<input className="border-4" type="password" id="password"
-									onChange={e => setPwd(e.target.value)} required
+									onChange={(e) => setPwd(e.target.value)} required
 								/>
-								<input id="login" type="submit" value="Log In" />
+								<input id="login" type="submit" value="Log In" /><br />
+								<p className={errMsg && "errmsg"}>{errMsg}</p>
+								<p>
+									<Link className="link" to="/forgotpw">➤ Forgot Password</Link><br /><br />
+									Need an account?<br />
+									<Link className="link" to="/register">➤ Register</Link>
+								</p>
 							</form>
-
-							<p className={errMsg && "errmsg"}>{errMsg}</p><br />
-							<p className="text-sm">
-								<Link className="link" to="/forgotpw">➤ Forgot Password?</Link><br />
-								<Link className="link" to="/register">➤ Register</Link>
-							</p>
+							
 						</div>
 					</>
 				)}
