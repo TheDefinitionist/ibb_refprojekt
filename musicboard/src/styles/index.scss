@@ -34,9 +34,13 @@ $footerColor: $mainColor;
 	}
 }
 
-// Body & Main Styles
+// General Styles
 body { 
 	background: $bodyColor;
+
+	input[type="text"],input[type="email"],input[type="password"] {
+		background: #efefef;
+	} 
 
 	a { 
 		cursor: pointer;
@@ -190,7 +194,7 @@ header {
 		gap: 15px;
 		.errmsg { @apply text-red-600 bg-red-100 border-2 border-red-500 p-2 mb-2 }
 		.succmsg { @apply text-green-600 bg-green-100 border-2 border-green-500 p-2 mb-2 }
-		&__form {
+		&__form { 
 			display: grid;
 			grid-template-columns: 250px;
 			label > span { @apply text-green-500 font-bold }

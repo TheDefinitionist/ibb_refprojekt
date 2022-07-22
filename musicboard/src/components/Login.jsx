@@ -73,7 +73,7 @@ const
 
 		// Rendered content
 		return (
-			<section className="section -mt-5">
+			<section className="section -mt-5 md:block">
 
 				{success ? ( // if logged in
 					<>
@@ -94,7 +94,7 @@ const
 							
 							<form className="login__form" onSubmit={submit}>
 								<label htmlFor="username">Username</label>
-								<input className="border-4" type="text" id="username"
+								<input className="border-4" autoComplete="off" type="text" id="username"
 									ref={userRef} onChange={e => setUser(e.target.value)} required
 								/>
 								<label htmlFor="password">Password</label>
@@ -109,7 +109,7 @@ const
 									<Link className="link" to="/register">➤ Register</Link>
 								</p>
 							</form>
-							
+
 						</div>
 					</>
 				)}

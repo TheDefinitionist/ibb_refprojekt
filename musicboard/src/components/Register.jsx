@@ -1,7 +1,7 @@
 // Register
 
 import { useRef, useState, useEffect } from 'react'
-import { FaCheck, FaTimes, FaCircle } from 'react-icons/fa'
+import { FaCheck, FaTimes/*, FaCircle*/ } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import axios from '.././utilities/axios'
 
@@ -9,6 +9,7 @@ import axios from '.././utilities/axios'
 // Regex validation
 const
 	USER_RGX = /^[a-zA-Z][a-zA-Z0-9-_]{3,24}$/,
+	MAIL_RGX = /\S+[^$]@\S+\.\S+/,
 	PWD_RGX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{4,24}$/,
 	REGISTER_URL = "/register",
 
@@ -20,7 +21,8 @@ const
 			// Form references
 			userRef = useRef(),
 			// Form states
-			[user, setUser] = useState(""), 
+			[user, setUser] = useState(""),
+			[mail, setMail] = useState(""), 
 			[pwd, setPwd] = useState(""),
 			[matchPwd, setMatchPwd] = useState(""), 
 			[errMsg, setErrMsg] = useState(""),
@@ -30,7 +32,8 @@ const
 				number: false, special: false
 			}),
 			// Form validation
-			[validName, setValidName] = useState(false), 
+			[validName, setValidName] = useState(false),
+			[validMail, setValidMail] = useState(false), 
 			[validPwd, setValidPwd] = useState(false),
 			[validMatch, setValidMatch] = useState(false),
 			// Registration complete
@@ -40,34 +43,36 @@ const
 		// Autofocus on 'username' input field
 		useEffect(() => userRef.current.focus(), [])
 		useEffect(() => {
+			// Check 'username' validation
+			setValidName(USER_RGX.test(user))
+			// Check 'mail' validation
+			setValidMail(MAIL_RGX.test(mail))
 			// Check 'password' validation and if it matches
 			setValidPwd(PWD_RGX.test(pwd))
 			setValidMatch(pwd === matchPwd)
-			// Check 'username' validation
-			setValidName(USER_RGX.test(user))
 			// Additionally Check which characters are still missing
 			setMustInclude({
 				lower: /[a-z]/.test(pwd),
 				upper: /[A-Z]/.test(pwd),
 				minmax: /^.{4,24}$/.test(pwd),
 				number: /[0-9]/.test(pwd),
-				special: /[\!\@\#\$\%]/.test(pwd)
+				special: /[!@#$%]/.test(pwd)
 			})
 			// Clear error message every time when form states change
 			setErrMsg("")
-		}, [user, pwd, matchPwd])
+		}, [user, mail, pwd, matchPwd])
 
 		// Submit to register
 		const submit = async e => {
 			e.preventDefault()
 			// Extra condition against JS hack
-			if (!validName || !validPwd) {
+			if (!validName || !validPwd || !validMail) {
 				setErrMsg("Invalid Entry")
 				return
 			}
 			try {
 				const response = await axios.post(REGISTER_URL, 
-					JSON.stringify({ username: user, password: pwd }),
+					JSON.stringify({ username: user, mail, password: pwd }),
 					{
 						headers: { 'Content-Type': 'applications/json'},
 						withCredentials: true
@@ -75,8 +80,8 @@ const
 				)
 				setSuccess(true)
 				// [Debug]
-				/*console.log(response.data)
-				console.log(response.accessToken)
+				console.log(response.data)
+				/*console.log(response.accessToken)
 				console.log(JSON.stringify(response))*/
 			} catch (err) {
 				// Error handling
@@ -91,10 +96,10 @@ const
 		const 
 			incl = mustInclude,
 			// Check button status
-			invalid = !validName || !validPwd || !validMatch,
+			invalid = !validName || !validPwd || !validMatch || !validMail,
 			// Classes
 			rgx = ['checkrgx--false', 'checkrgx--true'],
-			valid = <FaCheck />
+			valid = <span>✓</span>
 
 		// Rendered content
 		return (
@@ -119,8 +124,12 @@ const
 							
 							<form className="register__form" onSubmit={submit}>
 								<label htmlFor="username">Username {validName && valid}</label>
-								<input className="border-4" type="text" id="username"
+								<input className="border-4" autoComplete="off" type="text" id="username"
 									ref={userRef} onChange={e => setUser(e.target.value)} required
+								/>
+								<label htmlFor="mail">Mail Address {validMail && valid}</label>
+								<input className="border-4" autoComplete="off" type="email" id="mail"
+									onChange={e => setMail(e.target.value)} required
 								/>
 								<label htmlFor="password">Password {validPwd && valid}</label>
 								<input className="border-4" type="password" id="password"
@@ -139,8 +148,10 @@ const
 							</form><br />
 
 							<div className="instructions">
-								<p>Username can contain uppercase (A),<br />lowercase letters(a), numbers(0)<br />as well as underscores and hyphens</p><br />
-									<p>Password must include at least:<br />
+								<p><strong>Username</strong> can contain uppercase, lowercase letters, numbers as well as underscores and hyphens.<br/>
+									It must contain at least 4 characters and a maximum of 24.</p><br />
+								<p><strong>Mail address</strong> must meet the email pattern (ex. name@host.com).</p><br />
+								<p><strong>Password</strong> must include at least:<br />
 									<span className={incl.lower ? rgx[1] : rgx[0]}>
 										<span className="instructions__facheck">{incl.lower ? <FaCheck /> : <FaTimes />}</span> 1 lowercase character (a-z)
 									</span><br />
@@ -154,7 +165,7 @@ const
 										<span className="instructions__facheck">{incl.special ? <FaCheck /> : <FaTimes />}</span> 1 special character (!@$#%)
 									</span><br />
 									<span className={incl.minmax ? rgx[1] : rgx[0]}>
-										<span className="instructions__facheck">{incl.minmax ? <FaCheck /> : <FaTimes />}</span> 4 and maximum of 24 characters
+										<span className="instructions__facheck">{incl.minmax ? <FaCheck /> : <FaTimes />}</span> 4 and a maximum of 24 characters
 									</span><br />
 								</p>
 							</div>
