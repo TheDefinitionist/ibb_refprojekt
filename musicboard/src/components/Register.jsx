@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom'
 
 // Regex validation
 const
-	USER_RGX = /^[a-zA-Z][a-zA-Z0-9-_]{4,18}$/,
-	PWD_RGX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,24}$/,
+	USER_RGX = /^[a-zA-Z][a-zA-Z0-9-_]{4,24}$/,
+	PWD_RGX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{4,24}$/,
 
 
 	// Register component
@@ -26,7 +26,7 @@ const
 
 			// states for checking Regex
 			[mustInclude, setMustInclude] = useState({
-				lower: false, upper: false,
+				lower: false, upper: false, minmax: false,
 				number: false, special: false
 			})
 
@@ -42,28 +42,25 @@ const
 		// Operations after pageload
 		// Autofocus on 'username' input field
 		useEffect(() => userRef.current.focus(), [])
-
-		// Check 'username' validation
-		useEffect(() => setValidName(USER_RGX.test(user)), [user])
-
-		// Check which characters are still missing
 		useEffect(() => {
+			// Check 'password' validation and if it matches
+			setValidPwd(PWD_RGX.test(pwd))
+			setValidMatch(pwd === matchPwd)
+
+			// Check 'username' validation
+			setValidName(USER_RGX.test(user))
+			// Additionally Check which characters are still missing
 			setMustInclude({
 				lower: /[a-z]/.test(pwd),
 				upper: /[A-Z]/.test(pwd),
+				minmax: /^.{4,24}$/.test(pwd),
 				number: /[0-9]/.test(pwd),
 				special: /[\!\@\#\$\%]/.test(pwd)
 			})
-		}, [pwd])
 
-		// Check 'password' validation and if it matches
-		useEffect(() => {
-			setValidPwd(PWD_RGX.test(pwd))
-			setValidMatch(pwd === matchPwd)
-		}, [pwd, matchPwd])
-		
-		// Clear error message every time when form states change
-		useEffect(() => setErrMsg(""), [user, pwd, matchPwd])
+			// Clear error message every time when form states change
+			setErrMsg("")
+		}, [user, pwd, matchPwd])
 
 		// Submit to register
 		const submit = async e => {
@@ -115,13 +112,15 @@ const
 		const 
 			incl = mustInclude,
 			// Check button status
-			invalid = !validName || !validPwd || !validMatch
+			invalid = !validName || !validPwd || !validMatch,
+			// Classes
+			rgx = ['checkrgx--false', 'checkrgx--true'] 
 
 		// Rendered content
 		return (
 			<section className="section -mt-5">
 
-				{success ? ( // if logged in
+				{success ? ( // if successfully registered
 					<>
 						<div className="mb-10">
 							<h1 className="section__headline">SUCCESS!</h1>
@@ -131,7 +130,8 @@ const
 						</div>
 					</>
 
-				) : ( // if not logged in
+				) : ( // if unregistered
+
 					<>
 						<div className="mb-10">
 							<h1 className="section__headline">REGISTER</h1>
@@ -144,7 +144,7 @@ const
 								/>
 								<label htmlFor="password">Password</label>
 								<input className="border-4" type="password" id="password"
-									onChange={e => setPwd(e.target.value)} required
+									onChange={(e) => setPwd(e.target.value)} required
 								/>
 								<label htmlFor="confirm_pwd">Confirm Password</label>
 								<input className="border-4" type="password" id="confirm_pwd"
@@ -159,26 +159,27 @@ const
 							</form><br />
 							<div className="instructions">
 								<p>Password must include at least:<br />
-									<span className={incl.lower ? "checkrgx--true" : "checkrgx--false"}>
+									<span className={incl.lower ? rgx[1] : rgx[0]}>
 										<span className="instructions__facheck">{incl.lower ? <FaCheck /> : <FaTimes />}</span> 1 lowercase character (a-z)
 									</span><br />
-									<span className={incl.upper ? "checkrgx--true" : "checkrgx--false"}>
+									<span className={incl.upper ? rgx[1] : rgx[0]}>
 										<span className="instructions__facheck">{incl.upper ? <FaCheck /> : <FaTimes />}</span> 1 uppercase character (A-Z)
 									</span><br />
-									<span className={incl.number ? "checkrgx--true" : "checkrgx--false"}>
+									<span className={incl.number ? rgx[1] : rgx[0]}>
 										<span className="instructions__facheck">{incl.number ? <FaCheck /> : <FaTimes />}</span> 1 number (0-9)
 									</span><br />
-									<span className={incl.special ? "checkrgx--true" : "checkrgx--false"}>
+									<span className={incl.special ? rgx[1] : rgx[0]}>
 										<span className="instructions__facheck">{incl.special ? <FaCheck /> : <FaTimes />}</span> 1 special character (!@$#%)
 									</span><br />
-									<span className={incl.minmax ? "checkrgx--true" : "checkrgx--false"}>
-										<span className="instructions__facheck">{incl.minmax ? <FaCheck /> : <FaTimes />}</span> 6 characters and a maximum of 24
+									<span className={incl.minmax ? rgx[1] : rgx[0]}>
+										<span className="instructions__facheck">{incl.minmax ? <FaCheck /> : <FaTimes />}</span> 4 and maximum of 24 characters
 									</span><br />
 								</p>
 							</div>
 						</div>
 					</>
 				)}
+
 			</section>
 		)
 	}
