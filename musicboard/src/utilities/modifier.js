@@ -10,7 +10,6 @@ class Utils {
 
    static shorten(txt) {
       const max = Utils.max
-      let min = ['test', 82, Infinity]
       
       return txt.length >= max && txt.slice(0, max) + '...'
    }
