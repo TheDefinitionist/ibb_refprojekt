@@ -104,9 +104,11 @@ const
 								<input id="login" type="submit" value="Log In" /><br />
 								<p className={errMsg && "errmsg"}>{errMsg}</p>
 								<p>
-									<Link className="link" to="/forgotpw">➤ Forgot Password</Link><br /><br />
+									Forgot your login data?<br />
+									➤ <Link className="link" to="/forgotpw">Reset Password</Link><br />
+									➤ <Link className="link" to="/forgotname">Request Username</Link><br /><br />
 									Need an account?<br />
-									<Link className="link" to="/register">➤ Register</Link>
+									➤ <Link className="link" to="/register">Register</Link>
 								</p>
 							</form>
 

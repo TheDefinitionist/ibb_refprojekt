@@ -144,7 +144,7 @@ const
 									disabled={invalid ? true : false}
 								/><br></br>
 								<p className={errMsg && "errmsg"}>{errMsg}</p>
-								<p>Do you already have an account?<br /><Link className="link" to="/login">➤ Login</Link></p>
+								<p>Do you already have an account?<br />➤ <Link className="link" to="/login">Login</Link></p>
 							</form><br />
 
 							<div className="instructions">
