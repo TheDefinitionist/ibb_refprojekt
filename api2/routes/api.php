@@ -1,5 +1,4 @@
 <?php
-
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,10 +20,10 @@ Route::get('/user', function() {
 
 Route::post('/user', function() {
     return User::create([
-        'username' => 'Johndoe',
-        'password' => 'doe123',
+        'username' => 'John Doe',
+        'password' => 'john123',
         'email' => 'j.doe@email.com',
-        'token' => 'iuhgiughe384787tz3ugee897z9t897gh85',
+        'token' => 'l89h84ht872g26frgt9ehbt03nwosw8ht09th30duh',
         'premium_id' => 2
     ]);
 });

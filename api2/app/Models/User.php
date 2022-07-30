@@ -12,4 +12,6 @@ class User extends Model
     protected $fillable = [
         'username', 'password', 'email', 'token', 'premium_id'
     ];
+
+    public $timestamps = false;
 }

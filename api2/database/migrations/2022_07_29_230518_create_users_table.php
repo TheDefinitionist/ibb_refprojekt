@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-           
-        //Schema::enableForeignKeyConstraints();
-
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Schema::disableForeignKeyConstraints();
+        
+        //DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         
         DB::statement('DROP TABLE IF EXISTS `users`;');
         
@@ -40,14 +39,9 @@ return new class extends Migration
             ) ENGINE=InnoDB;
         ');
 
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        
-        //Schema::enableForeignKeyConstraints();
+        Schema::enableForeignKeyConstraints();
 
-        /*Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });*/
+        //DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**

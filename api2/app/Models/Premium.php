@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Premium extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'username', 'password', 'email', 'token', 'premium_id'
+        'status', 'expiration_date', 'subscription_date', 'description'
     ];
+
+    public $timestamps = false;
 }

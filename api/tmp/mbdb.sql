@@ -34,6 +34,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `musicboardDB`.`user`
 -- -----------------------------------------------------
+
+
+
 CREATE TABLE IF NOT EXISTS `musicboardDB`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,

@@ -1,6 +1,5 @@
 <?php
-
-use App\Models\User;
+use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,20 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/user', function() {
-    return User::all();
+Route::get('/account', function() {
+    return Account::all();
 });
 
-Route::post('/user', function() {
-    return User::create([
-        'username' => 'Johndoe',
-        'password' => 'doe123',
+Route::post('/account', function() {
+    return Account::create([
+        'username' => 'John Doe',
+        'password' => 'john123',
         'email' => 'j.doe@email.com',
-        'token' => 'iuhgiughe384787tz3ugee897z9t897gh85',
+        'token' => 'l89h84ht872g26frgt9ehbt03nwosw8ht09th30duh',
         'premium_id' => 2
     ]);
 });
 
-/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});*/
+});
