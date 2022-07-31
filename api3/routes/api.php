@@ -23,8 +23,7 @@ Route::post('/account', function() {
         'username' => 'John Doe',
         'password' => 'john123',
         'email' => 'j.doe@email.com',
-        'token' => 'l89h84ht872g26frgt9ehbt03nwosw8ht09th30duh',
-        'premium_id' => 2
+        'token' => 'l89h84ht872g26frgt9ehbt03nwosw8ht09th30duh'
     ]);
 });
 
