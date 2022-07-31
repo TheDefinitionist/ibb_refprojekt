@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
         
         //DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        
         //DB::statement('DROP TABLE IF EXISTS `accounts`;');
         
         DB::statement('

@@ -10,7 +10,7 @@ class Premium extends Model
     use HasFactory;
 
     protected $fillable = [
-        'status', 'expiration_date', 'subscription_date', 'description'
+        'status', 'expiration_date', 'subscription_date', 'description', 'accounts_id'
     ];
 
     public $timestamps = false;

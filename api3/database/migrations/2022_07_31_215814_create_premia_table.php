@@ -14,26 +14,25 @@ return new class extends Migration
     public function up()
     {
         Schema::disableForeignKeyConstraints(); 
-
+        
+        //DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         //DB::statement('DROP TABLE IF EXISTS `premia`;');
         
         DB::statement('
             CREATE TABLE `premia` (
-                `id` INT NOT NULL AUTO_INCREMENT,
-                `status` TINYINT NULL DEFAULT 0,
-                `expiration_date` DATETIME NULL,
-                `subscription_date` DATETIME NULL,
+                `id` INT AUTO_INCREMENT,
+                `status` TINYINT DEFAULT 0,
+                `expiration_date` DATETIME,
+                `subscription_date` DATETIME ,
                 `description` TEXT NOT NULL,
-                `user_id` INT NOT NULL,
-                PRIMARY KEY (`id`, `user_id`),
-                INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-
-                INDEX `fk_premium_user1_idx` (`user_id` ASC),
-                CONSTRAINT `fk_premium_user1`
-                    FOREIGN KEY (`user_id`)
-                    REFERENCES `musicboardDB`.`accounts` (`id`)
-                    ON DELETE NO ACTION
-                    ON UPDATE NO ACTION
+                `accounts_id` INT NOT NULL,
+                
+                PRIMARY KEY (`id`, `accounts_id`),
+                INDEX `fk_premia_accounts_idx` (`accounts_id`),
+                CONSTRAINT `fk_premia_accounts`
+                    FOREIGN KEY (`accounts_id`)
+                    REFERENCES `accounts` (`id`)
+                    ON DELETE CASCADE
             ) ENGINE=InnoDB;
         ');
 
