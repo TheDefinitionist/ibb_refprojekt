@@ -15,7 +15,7 @@ class Account extends Model
     
     public $timestamps = false;
 
-    public function premia()
+    public function premium()
     {
         return $this->hasOne(Premium::class);
     }

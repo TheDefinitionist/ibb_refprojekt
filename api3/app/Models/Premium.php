@@ -9,9 +9,14 @@ class Premium extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+    /*protected $fillable = [
         'status', 'expiration_date', 'subscription_date', 'description', 'accounts_id'
     ];
 
-    public $timestamps = false;
+    public $timestamps = false;*/
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class);
+    }
 }
