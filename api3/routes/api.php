@@ -1,5 +1,7 @@
 <?php
-use App\Models\Account;
+
+use App\Http\Controllers\AccountController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,18 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/account', function() {
-    return Account::all();
-});
+Route::resource('accounts', AccountController::class);
+Route::get('/accounts/username/{username}', [AccountController::class, 'search']);
 
-Route::post('/account', function() {
-    return Account::create([
-        'username' => 'John Doe',
-        'password' => 'john123',
-        'email' => 'j.doe@email.com',
-        'token' => 'l89h84ht872g26frgt9ehbt03nwosw8ht09th30duh'
-    ]);
-});
+// Route::get('/accounts', [AccountController::class, 'index']);
+// Route::post('/accounts', [AccountController::class, 'store']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
