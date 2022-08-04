@@ -4,20 +4,20 @@ const Footer = () => (
 	<footer>
 		<div id="sitemap">
 			<div className="sitemap__wrapper">
-					<nav>
-						<h2>MusicBoard</h2>
-						<li><Link to="/charts">CHART</Link></li>
-						<li><Link to="/music">MUSIC</Link></li>
-						<li><Link to="/culture">MEDIA</Link></li>
-						<li><Link to="/media">CULTURE</Link></li>
-					</nav>
-					<nav>
-						<h2>Sitemap</h2>
-						<li><Link to="/subscribe">Subscribe</Link></li>
-						<li><Link to="/privacy">Privacy Policy</Link></li>
-						<li><Link to="/terms-of-use">Terms Of Use</Link></li>
-						<li><Link to="/contact">Contact Us</Link></li>
-					</nav>
+				<nav>
+					<h2>MusicBoard</h2>
+					<li><Link to="/charts">CHART</Link></li>
+					<li><Link to="/music">MUSIC</Link></li>
+					<li><Link to="/culture">MEDIA</Link></li>
+					<li><Link to="/media">CULTURE</Link></li>
+				</nav>
+				<nav>
+					<h2>Sitemap</h2>
+					<li><Link to="/subscribe">Subscribe</Link></li>
+					<li><Link to="/privacy">Privacy Policy</Link></li>
+					<li><Link to="/terms-of-use">Terms Of Use</Link></li>
+					<li><Link to="/contact">Contact Us</Link></li>
+				</nav>
 			</div>
 		</div>
 		<div id="social-links">
