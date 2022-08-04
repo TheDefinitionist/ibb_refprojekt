@@ -1,4 +1,4 @@
-function Account() {
+const Account = () => {
    return (
       <div>Account</div>
    )
