@@ -1,6 +1,8 @@
 const Register = () => {
    return (
-      <div>Register</div>
+      <>
+         <h4 className="text-2xl pb-4">Register</h4>
+      </>
    )
 }
 

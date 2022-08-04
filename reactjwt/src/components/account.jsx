@@ -1,6 +1,8 @@
 const Account = () => {
    return (
-      <div>Account</div>
+      <>
+         <h4 className="text-2xl pb-4">Account</h4>
+      </>
    )
 }
 
