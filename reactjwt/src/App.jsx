@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import { Routes, Route } from 'react-router-dom'
 import './App.css'
 
 function App() {
@@ -11,12 +10,16 @@ function App() {
 
   return (
     <div className="App">
-      <h3>Login</h3>
-      <form onSubmit={submit}>
-        <input type="text" id="email" value="john@doe.com" /><br />
-        <input type="password" id="password" value="john123" /><br />
-        <input type="button" id="submit" value="Login" />
-      </form>
+      <Header />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/account" element={<Account />} />
+          </Routes>
+        </main >
+        <Footer />
     </div>
   )
 }

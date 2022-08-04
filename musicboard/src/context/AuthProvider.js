@@ -1,4 +1,4 @@
-// Authorizer
+// AuthProvider
 
 import { createContext, useState } from 'react'
 
