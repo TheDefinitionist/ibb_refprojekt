@@ -6,32 +6,35 @@ import Register from './components/Register'
 import Login from './components/Login'
 import Account from './components/Account'
 import Logout from './components/Logout'
-import { useEffect } from 'react'
+import Err404 from './components/Err404'
 
 function App() {
 
-	const loc = useLocation()
-	const [loggedIn, setLoggedIn] = useState(false)
+	const
+		loc = useLocation(),
+		[loggedIn, setLoggedIn] = useState(false),
+		[registered, setRegistered] = useState(false),
+		[loggedOut, setLoggedOut] = useState(false)
 
 	return (
 		<main className="container mx-auto">
-			<Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+			<Header logged={{loggedIn, setLoggedIn, setLoggedOut}} />
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/login" element={<Login />} />
+				<Route path="/login" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="/account" element={<Account />} />
-				<Route path="/logout" element={<Logout loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+				<Route path="/logout" element={<Logout loggedOut={loggedOut} setLoggedOut={setLoggedOut} />} />
+				<Route path="*" element={<Err404 />} />
 			</Routes>
 			<div>
-				{ loggedIn ? (
+				{ loggedIn ? 
 					<>
-						<h3>Hello</h3><br />
 						{ loggedIn &&
-							<p>➤ <Link to="/account">Go to your Account panel</Link></p>
-						}
+							 loc.pathname !== '/account' ? 
+							 <p><br />➤ Go to your <Link to="/account" className="text-red-500 hover:underline">Account</Link> panel.</p> : '' }
 					</>
-				) : ( loc.pathname === '/login' ? '' : <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} /> )
+				 : loc.pathname === '/login' ? '' : <Login setLoggedIn={setLoggedIn} />
 				}
 			</div>
 		</main>
