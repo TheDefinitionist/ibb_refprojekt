@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
+import axios from './api/axios'
 import Header from './components/Header'
 import Home from './components/Home'
 import Register from './components/Register'
@@ -15,6 +16,8 @@ function App() {
 		[loggedIn, setLoggedIn] = useState(false),
 		[registered, setRegistered] = useState(false),
 		[loggedOut, setLoggedOut] = useState(false)
+
+	
 
 	return (
 		<main className="container mx-auto">
