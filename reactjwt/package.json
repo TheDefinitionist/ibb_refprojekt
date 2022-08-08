@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@analytics/type-utils": "^0.6.0",
     "axios": "^0.27.2",
     "init": "^0.1.2",
     "npx": "^10.2.2",

@@ -16,13 +16,9 @@ function App() {
 		[loggedIn, setLoggedIn] = useState(false),
 		[loggedOut, setLoggedOut] = useState(false)
 
-	useEffect(()=> 
-		setLoggedIn(authService.isUser())
-	, [])
+	useEffect(()=> setLoggedIn(authService.isUser()), [])
 
-	const logout = () => {
-		authService.logout()
-	}
+	const logout = () => authService.logout()
 
 	return (
 		<main className="container mx-auto p-10">
@@ -30,7 +26,7 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/login" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
-				<Route path="/register" element={<Register />} />
+				<Route path="/register" element={<Register setLoggedIn={setLoggedIn} loggedIn={loggedIn} />} />
 				<Route path="/account" element={<Account />} />
 				<Route path="/logout" element={<Logout loggedOut={loggedOut} logout={logout} />} />
 				<Route path="*" element={<Err404 />} />
