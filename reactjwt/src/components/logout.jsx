@@ -1,6 +1,6 @@
 import { Navigate, Link } from 'react-router-dom'
 
-const Logout = ({ loggedOut }) => {
+const Logout = ({ loggedOut}) => {
 
    const loggedOutMsg = <p>You have been logged out.</p>
 
