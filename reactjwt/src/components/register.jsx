@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from 'react-router-dom'
 import authService from '../api/authService'
 
 const log = val => console.log(val)
@@ -28,7 +29,7 @@ const Register = () => {
                else if (signingUp.request.status === 422) {
                   setErrMsg('Mail address already in use.')
                } else {
-                  setErrMsg('Authorization has failed.')
+                  setErrMsg('Something else is wrong.')
                }
             } catch (error) {
                log(error)
@@ -42,23 +43,30 @@ const Register = () => {
    return (
       <>
          <h4 className="text-2xl pb-4">Register</h4>
-         { !registered && <p>Please register to log in.</p>}<br />
-         <form onSubmit={handleRegister}>
-            <p style={{ color: errMsg ? 'red' : succMsg ? 'green' : 'black' }}>{errMsg || succMsg}<br /></p><br />
-            <input type="text" id="username"
-               onChange={(e) => setName(e.target.value)} value={name}
-               required /><br /> { /* johndoe*/}
-            <input type="email" id="email"
-               onChange={(e) => setEmail(e.target.value)} value={email}
-               required /><br /> { /* john@doe.com*/}
-            <input type="password" id="password"
-               onChange={(e) => setPassword(e.target.value)} value={password}
-               required /><br />  { /* john123 */}
-            <input type="password" id="password_confirm"
-               onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword}
-               required /><br />
-            <button className="bg-red-500 py-1 px-2 mt-4 hover:bg-red-400" id="submit">Sign Up</button>
-         </form>
+         { !registered ? <p>Please register to log in.</p> : <br/> }<br />
+         { !registered ? 
+            <form onSubmit={handleRegister}>
+               <p style={{ color: errMsg ? 'red' : succMsg ? 'green' : 'black' }}>{errMsg || succMsg}<br /></p><br />
+               <input type="text" id="username"
+                  onChange={(e) => setName(e.target.value)} value={name}
+                  required /><br /> { /* johndoe*/}
+               <input type="email" id="email"
+                  onChange={(e) => setEmail(e.target.value)} value={email}
+                  required /><br /> { /* john@doe.com*/}
+               <input type="password" id="password"
+                  onChange={(e) => setPassword(e.target.value)} value={password}
+                  required /><br />  { /* john123 */}
+               <input type="password" id="password_confirm"
+                  onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword}
+                  required /><br />
+               <button className="bg-red-500 py-1 px-2 mt-4 hover:bg-red-400" id="submit">Sign Up</button>
+            </form>
+         : 
+            <>
+               <p>Your registration was successful.</p> <br />
+               <p>➤ You can now proceed to <Link className="text-red-500 hover:underline" to="/login">log in</Link></p>
+            </>
+         }
       </>
    )
 }

@@ -1,26 +1,15 @@
-import path from 'path-browserify'
 import { isPromise } from '@analytics/type-utils'
 import axios from 'axios'
-
-
-
-//log('Hello, this is a text message in a ')
+import betterLog from './betterLog'
 
 const 
+   log = msg => new betterLog({ debug: true, import: import.meta.url }).log(msg),
    LOCAL_STORED_USER = 'mb-user',
    SESSION_USER_TOKEN = LOCAL_STORED_USER+'-token',
 
    restApi = axios.create({
       baseURL: 'http://localhost:8000/api'
    }),
-
-   debug = true,
-   log = msg => {
-      return debug && (()=> {
-         const filename = path.basename(import.meta.url).replace(/\?.+/, '')
-         console.info('%c'+filename, 'padding:3px;color: lightblue; background-color: navy', msg)
-      })()
-   },
 
    register = async (name, email, password) => {
       return await restApi.post('/register', { name, email, password })
