@@ -1,4 +1,11 @@
+// Header
+
 import { Link } from 'react-router-dom'
+
+const ph = {
+   loginStatus: false,
+   username: "John Doe"
+}
 
 const Header = () => {
    return (
@@ -16,8 +23,17 @@ const Header = () => {
                   <li><Link to="/media">MEDIA</Link></li>
                </ul>
             </nav>
-            <Link className="login" to="/login">Login</Link> |
-            <Link className="register" to="/register">Register</Link>
+            { ph.loginStatus ? <>
+                  <div>
+                     { ph.username && <>Welcome, <span className="text-red-500 font-bold"> {ph.username}</span>!&nbsp; |</>}
+                  </div>
+                  <Link className="account" to="/account">Account</Link>|
+                  <Link className="logout" to="/logout">Logout</Link>
+               </> : <>
+                  <Link className="login" to="/login">Login</Link>|
+                  <Link className="register" to="/register">Register</Link>
+               </>
+            }
             <button className="subscribe" onClick={()=> alert('hi')}>
                <i className="fa-solid fa-crown"></i>&nbsp;PREMIUM
             </button>

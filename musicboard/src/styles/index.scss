@@ -61,12 +61,12 @@ header {
 		#home {
 			@apply flex font-medium items-center text-gray-900 mb-0;
 
-			h1 { @apply ml-3 text-xl }
+			h1 { @apply ml-3 text-xl pb-[3px] }
 			.logo { @apply w-12 h-12 text-white }
 		}
 
 		nav {
-			@apply ml-auto mr-auto flex flex-wrap items-center text-base justify-center;
+			@apply ml-10 mr-auto;
 
 			#navbar {
 				@apply flex;
@@ -74,8 +74,8 @@ header {
 			}
 		}
 
-		.login { @apply inline-flex items-center border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 text-base mt-0 }
-		.register { @apply font-bold text-red-500 p-2 focus:outline-none hover:text-black }
+		.login, .account { @apply font-bold inline-flex items-center border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 hover:text-red-500 text-base mt-0 }
+		.register, .logout { @extend .login }
 
 		button.subscribe {
 			@apply cta-red focus:outline-none py-0 px-2;
@@ -189,7 +189,7 @@ header {
 		div > img { @apply img-cover }
 	}
 
-	.login,.register {
+	.login, .register {
 		display: flex;
 		gap: 15px;
 		.errmsg { @apply text-red-600 bg-red-100 border-2 border-red-500 p-2 mb-2 }
@@ -214,6 +214,10 @@ header {
 			}
 		}
 	}
+
+	// .logout {}
+	// .subscribe {}
+	// .account {}
 }
 
 // Footer

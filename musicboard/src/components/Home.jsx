@@ -1,4 +1,6 @@
-import Modifier from "../utilities/modifier"
+// Home
+
+import Modifier from '../utilities/modifier'
 
 Modifier.setMax(50)
 const short = Modifier.shorten

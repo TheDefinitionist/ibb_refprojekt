@@ -1,12 +1,13 @@
 /*
-   [betterLog] 
-   - console.log extension with style setup and filename display
+   [betterLog] v1.0
+   ------------------
+   - console.log extension with style setup, toggle mode and filename display
+
    (c) Thielicious
-   thielicious.github.io
-   -----------------
+   https://github.com/thielicious
 */
 
-// package to work with the filename
+// Package to work with the filename
 import path from 'path-browserify'
 
 class betterLog {
@@ -25,7 +26,7 @@ class betterLog {
       this.filenameStyle = style
    }
 
-   // logs the content together with the enhanced options
+   // Logs the content together with the enhanced options
    log (msg) {
 
       if (this.debug && this.filenameStyle) {

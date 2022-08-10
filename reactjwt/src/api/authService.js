@@ -3,7 +3,10 @@ import axios from 'axios'
 import betterLog from './betterLog'
 
 const 
-   log = msg => new betterLog({ debug: true, import: import.meta.url }).log(msg),
+   log = msg => new betterLog({ 
+      debug: true, 
+      import: import.meta.url 
+   }).log(msg),
    LOCAL_STORED_USER = 'mb-user',
    SESSION_USER_TOKEN = LOCAL_STORED_USER+'-token',
 
