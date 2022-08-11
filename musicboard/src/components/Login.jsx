@@ -37,7 +37,7 @@ const
 		// Autofocus on 'email' input field
 		useEffect(() => {
 			if (!loggedIn) emailRef?.current.focus()
-		}, [])
+		}, [loggedIn])
 		// Clear error message when 'email' or 'pwd' state change
 		useEffect(() => setErrMsg(""), [email, pwd])
 
