@@ -72,7 +72,6 @@ const
 			<section className="section -mt-5 md:block">
 
 				{ loggedIn ? ( <Navigate replace to="/" />  // if logged in
-				
 
 				) : ( // if not logged in
 					<>
@@ -93,9 +92,9 @@ const
 								<input id="login" type="submit" value="Log In" /><br />
 								<p className={errMsg && "errmsg"}>{errMsg}</p>
 								<p>
-									Forgot your login data?<br />
-									➤ <Link className="link" to="/forgotpw">Reset Password</Link><br />
-									➤ <Link className="link" to="/forgotname">Request Username</Link><br /><br />
+									Can't remember your login data?<br />
+									➤ <Link className="link" to="/forgot-password">Forgot Password</Link><br />
+									➤ <Link className="link" to="/forgot-email">Forgot Email</Link><br /><br />
 									Need an account?<br />
 									➤ <Link className="link" to="/register">Register</Link>
 								</p>

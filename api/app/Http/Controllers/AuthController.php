@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -21,9 +22,11 @@ class AuthController extends Controller
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
+        
         $credentials = $request->only('email', 'password');
 
         $token = Auth::attempt($credentials);
+        
         if (!$token) {
             return response()->json([
                 'status' => 'error',
@@ -32,6 +35,7 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+        
         return response()->json([
             'status' => 'success',
             'user' => $user,
@@ -47,7 +51,7 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:4',
+            'password' => 'required|string|min:6',
         ]);
 
         $user = User::create([
@@ -57,6 +61,7 @@ class AuthController extends Controller
         ]);
 
         $token = Auth::login($user);
+       
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',
@@ -68,9 +73,35 @@ class AuthController extends Controller
         ]);
     }
 
+    public function update(Request $request, $id) 
+    {
+        $request->validate([
+            'name' => 'required|string|max:255'
+        ]);
+
+        $auth = Auth::user();
+        $user = User::find($id);
+
+        if ($auth->id == $user->id) {
+            $user->update($request->all());
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Successfully updated the user',
+                'user' => $user
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => "A user is not eligible to update other user's data"
+            ]);
+        }
+    }
+
     public function logout()
     {
         Auth::logout();
+
         return response()->json([
             'status' => 'success',
             'message' => 'Successfully logged out',
