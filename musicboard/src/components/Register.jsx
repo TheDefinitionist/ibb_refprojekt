@@ -97,37 +97,6 @@ const
          }
       }
 
-		// const submit = async e => {
-		// 	e.preventDefault()
-
-		// 	// Extra condition against JS hack
-		// 	if (!validName || !validPwd || !validMail) {
-		// 		setErrMsg("Invalid Entry")
-		// 		return
-		// 	}
-
-		// 	try {
-		// 		const response = await authService.register(REGISTER_URL, 
-		// 			JSON.stringify({ username: user, mail, password: pwd }),
-		// 			{
-		// 				headers: { 'Content-Type': 'applications/json'},
-		// 				withCredentials: true
-		// 			}
-		// 		)
-		// 		setSuccess(true)
-		// 		// [Debug]
-		// 		console.log(response.data)
-		// 		/*console.log(response.accessToken)
-		// 		console.log(JSON.stringify(response))*/
-		// 	} catch (err) {
-		// 		// Error handling
-		// 		let error = err?.response
-		// 		if (!error) setErrMsg("No Server Response") 
-		// 		else if (error?.status === 409) setErrMsg("Username Taken")
-		// 		else setErrMsg("Registration Failed")
-		// 	}
-		// }
-
 		// Small shortcuts
 		const 
 			incl = mustInclude,

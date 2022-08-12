@@ -25,6 +25,7 @@ use Illuminate\Auth\Events\PasswordReset;
 
 // Routes that require authorization
 Route::controller(AuthController::class)->group(function () {
+
     Route::post('login', 'login');
     Route::post('register', 'register');
     Route::put('update/{id}', 'update');
@@ -44,6 +45,7 @@ Route::get('/forgot-password', function () {
 
 // Posts request to reset the password and sends the link per email 
 Route::post('/forgot-password', function (Request $request) {
+
     $request->validate(['email' => 'required|email']);
  
     $status = Password::sendResetLink(
@@ -51,8 +53,8 @@ Route::post('/forgot-password', function (Request $request) {
     );
  
     return $status === Password::RESET_LINK_SENT
-                ? back()->with(['status' => __($status)])
-                : back()->withErrors(['email' => __($status)]);
+        ? back()->with(['status' => __($status)])
+        : back()->withErrors(['email' => __($status)]);
 })->middleware('guest')->name('password.email');
 
 // Route to the password reset form after clicking on the link in the mail 
@@ -62,6 +64,7 @@ Route::get('/reset-password/{token}', function ($token) {
 
 //
 Route::post('/reset-password', function (Request $request) {
+
     $request->validate([
         'token' => 'required',
         'email' => 'required|email',
@@ -69,7 +72,9 @@ Route::post('/reset-password', function (Request $request) {
     ]);
  
     $status = Password::reset(
+       
         $request->only('email', 'password', 'password_confirmation', 'token'),
+
         function ($user, $password) {
             $user->forceFill([
                 'password' => Hash::make($password)
@@ -82,8 +87,8 @@ Route::post('/reset-password', function (Request $request) {
     );
  
     return $status === Password::PASSWORD_RESET
-                ? redirect()->route('login')->with('status', __($status))
-                : back()->withErrors(['email' => [__($status)]]);
+        ? redirect()->route('login')->with('status', __($status))
+        : back()->withErrors(['email' => [__($status)]]);
 })->middleware('guest')->name('password.update');
 
 

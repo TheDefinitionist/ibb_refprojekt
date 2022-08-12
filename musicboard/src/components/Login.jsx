@@ -93,8 +93,8 @@ const
 								<p className={errMsg && "errmsg"}>{errMsg}</p>
 								<p>
 									Can't remember your login data?<br />
-									➤ <Link className="link" to="/forgot-password">Forgot Password</Link><br />
-									➤ <Link className="link" to="/forgot-email">Forgot Email</Link><br /><br />
+									➤ <Link className="link" to="/forgotpw">Forgot Password</Link><br />
+									➤ <Link className="link" to="/forgotemail">Forgot Email</Link><br /><br />
 									Need an account?<br />
 									➤ <Link className="link" to="/register">Register</Link>
 								</p>

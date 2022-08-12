@@ -189,7 +189,7 @@ header {
 		div > img { @apply img-cover }
 	}
 
-	.login, .register {
+	.login, .register, .forgotpw {
 		display: flex;
 		gap: 15px;
 		.errmsg { @apply text-red-600 bg-red-100 border-2 border-red-500 p-2 mb-2 }
@@ -198,7 +198,7 @@ header {
 			display: grid;
 			grid-template-columns: 250px;
 			label > span { @apply text-green-500 font-bold }
-			#login,#register {
+			#login, #register, #sendforgotpw {
 				@apply cta-red inline mt-5;
 				&.disabled { @apply opacity-[0.5] cursor-not-allowed }
 			}
