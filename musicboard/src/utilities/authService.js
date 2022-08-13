@@ -12,10 +12,15 @@ const
    log = msg => new betterLog({ 
       debug: true, 
       import: import.meta.url 
-   }).log(msg),
+   }).log(msg)
 
+// axios.defaults.withCredentials = true
+
+const 
    restApi = axios.create({
-      baseURL: API_BASE_URL
+      baseURL: API_BASE_URL,
+      crossDomains: true,
+      withCredentials: true
    }),
 
    register = async (name, email, password) => {
@@ -63,7 +68,7 @@ const
             return err
          }),
 
-   refresh = () => {},
+   //refresh = () => {},
 
    logout = () => {
       localStorage.clear() && sessionStorage.clear()

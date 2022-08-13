@@ -61,7 +61,7 @@ const
 					
 					<form className="forgotpw__form" onSubmit={forgotPWHandler}>
 						<label htmlFor="email">Email</label>
-						<input className="border-4" autoComplete="off" type="email" id="email"
+						<input className="border-4" autoComplete="off" type="email" value="ich@bin.gut" id="email"
 							ref={emailRef} onChange={e => setEmail(e.target.value)} required
 						/>
 						<input id="sendforgotpw" type="submit" value="Submit" /><br />

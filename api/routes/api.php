@@ -62,7 +62,7 @@ Route::get('/reset-password/{token}', function ($token) {
     return view('auth.reset-password', ['token' => $token]);
 })->middleware('guest')->name('password.reset');
 
-//
+// Validates the entries sent on the reset password form and finish
 Route::post('/reset-password', function (Request $request) {
 
     $request->validate([
