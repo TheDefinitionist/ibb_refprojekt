@@ -19,8 +19,11 @@ const
 const 
    restApi = axios.create({
       baseURL: API_BASE_URL,
-      crossDomains: true,
-      withCredentials: true
+      withCredentials: false,
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'PUT,POST,DELETE,GET,OPTIONS',
+      'Access-Control-Allow-Headers': 'Accept,Authorization,Content-Type',
+      'Content-Type': 'application/json'
    }),
 
    register = async (name, email, password) => {
