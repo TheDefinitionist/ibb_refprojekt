@@ -25,7 +25,6 @@ use Illuminate\Auth\Events\PasswordReset;
 
 // Routes that require authorization
 Route::controller(AuthController::class)->group(function () {
-
     Route::post('login', 'login');
     Route::post('register', 'register');
     Route::put('update/{id}', 'update');
@@ -53,8 +52,10 @@ Route::post('/forgot-password', function (Request $request) {
     );
  
     return $status === Password::RESET_LINK_SENT
-        ? back()->with(['status' => __($status)])
-        : back()->withErrors(['email' => __($status)]);
+        // ? back()->with(['status' => __($status)])
+        // : back()->withErrors(['email' => __($status)]);
+        ? response()->json(['status' => 'success', 'sendResetLinkStatus' => $status, 'message' => 'Mail was sent.'])
+        : response()->json(['status' => 'error', 'sendResetLinkStatus' => $status, 'message' => 'Cannot send mail.']);
 })->middleware('guest')->name('password.email');
 
 // Route to the password reset form after clicking on the link in the mail 

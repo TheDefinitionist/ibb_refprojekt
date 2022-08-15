@@ -28,23 +28,33 @@ const
 			if (!loggedIn) emailRef?.current.focus()
 		}, [loggedIn])
 		// Clear error message when 'email' or 'pwd' state change
-		useEffect(() => setErrMsg(""), [email])
+		useEffect(() => setErrMsg(''), [email])
+		useEffect(() => setSuccMsg(''), [email])
 
 		// Login handler
 		const forgotPWHandler = async (e) => {
 			e.preventDefault()
 			try {
 				const response = await authService.forgotPw(email)
-				log(response)
-            if (response.request.status === 200 && response.data.status === 'success') {
-					const accessToken = response?.data.accessToken
-					setEmail("")
-            } else if (response.request.status === 401) {
-					setErrMsg('Wrong mail address or password.')
-				} else if (!response) {
+            if (response) {
+					log(response)
+					if (response.data?.status === 'success') {
+						setSuccMsg('Please follow the instructions we sent you per mail.')
+					} else if (response.data?.status === 'error') {
+						if (response.data?.sendResetLinkStatus === 'passwords.throttled') { 
+							setErrMsg('You have been sending password resets too many times. Please wait a moment.')
+						} else {
+							setErrMsg('The email is not registered.')
+						}
+					} else if (response.response?.status === 422) {
+						setErrMsg('The email must be a valid email address.')
+					} else {
+						setErrMsg('Something unexpected happened. Please try again.')
+					}
+				}  else if (!response) {
 					setErrMsg('No server response.')
 				} else {
-					setErrMsg('An unexpected error has occured. Please contact the site admin.')
+					setErrMsg('An unexpected error has occured. Please contact the support.')
 				}
 			} catch (error) {
             log(error)
@@ -61,11 +71,11 @@ const
 					
 					<form className="forgotpw__form" onSubmit={forgotPWHandler}>
 						<label htmlFor="email">Email</label>
-						<input className="border-4" autoComplete="off" type="email" value="ich@bin.gut" id="email"
+						<input className="border-4" autoComplete="off" type="email" id="email"
 							ref={emailRef} onChange={e => setEmail(e.target.value)} required
 						/>
 						<input id="sendforgotpw" type="submit" value="Submit" /><br />
-						<p className={errMsg && "errmsg"}>{errMsg}</p>
+						<p className={errMsg ? "errmsg" : succMsg ? "succmsg" : ""}>{errMsg || succMsg}</p>
 					</form><br />
 
 					<div className="instructions">

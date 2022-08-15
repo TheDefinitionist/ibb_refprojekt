@@ -20,10 +20,12 @@ const
    restApi = axios.create({
       baseURL: API_BASE_URL,
       withCredentials: false,
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'PUT,POST,DELETE,GET,OPTIONS',
-      'Access-Control-Allow-Headers': 'Accept,Authorization,Content-Type',
-      'Content-Type': 'application/json'
+      headers: {
+         'Access-Control-Allow-Origin': '*',
+         'Access-Control-Allow-Methods': 'PUT,POST,DELETE,GET,OPTIONS',
+         'Access-Control-Allow-Headers': 'Origin,Accept,Authorization,Content-Type,Set-Cookie',
+         'Accept': 'application/json'
+      }
    }),
 
    register = async (name, email, password) => {
@@ -58,18 +60,19 @@ const
 
    isUser = () => JSON.parse(localStorage.getItem(LOCAL_STORED_USER)),
 
-   forgotPw = async email => 
-      await restApi.post('/forgot-password', { email })
+   forgotPw = async email => {
+      // const param = new URLSearchParams()
+      // param.append('email', email)
+      return await restApi.post('/forgot-password', { email })
          .then(response => {
+            //if (response.data.authorisation.token) {}
             log(response)
-            if (response.data.authorisation.token) {
-               
-            }
             return response
          }).catch(err => {
             log(err)
             return err
-         }),
+         })
+   },
 
    //refresh = () => {},
 
