@@ -15,7 +15,6 @@ import { Account } from './components/Account'
 import { Subscribe } from './components/Subscribe'
 import { Logout } from './components/Logout'
 import { ForgotPW } from './components/ForgotPW'
-//import { ForgotEmail } from './components/ForgotEmail'
 import Footer from './components/Footer'
 import './styles/index.scss'
 

@@ -2,7 +2,9 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "clearall": "php artisan optimize:clear && php artisan optimize",
+        "deepclear": "composer dump-autoload && composer clear-cache && npm cache clean --force"
     },
     "devDependencies": {
         "axios": "^0.27",
