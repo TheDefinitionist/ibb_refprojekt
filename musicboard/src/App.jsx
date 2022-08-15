@@ -15,6 +15,7 @@ import { Account } from './components/Account'
 import { Subscribe } from './components/Subscribe'
 import { Logout } from './components/Logout'
 import { ForgotPW } from './components/ForgotPW'
+import { NotFound } from './components/NotFound'
 import Footer from './components/Footer'
 import './styles/index.scss'
 
@@ -40,6 +41,7 @@ const App = () => {
 					<Route path="/subscribe" element={<Subscribe />} />
 					<Route path="/account" element={<Account loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 					<Route path="/forgotpw" element={<ForgotPW loggedIn={loggedIn} />} />
+					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</main >
 			<Footer />

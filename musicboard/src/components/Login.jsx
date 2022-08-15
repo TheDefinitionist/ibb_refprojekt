@@ -94,6 +94,7 @@ const
 								<p>
 									Can't remember your login data?<br />
 									➤ <Link className="link" to="/forgotpw">Forgot Password</Link><br />
+									<br />
 									Need an account?<br />
 									➤ <Link className="link" to="/register">Register</Link>
 								</p>

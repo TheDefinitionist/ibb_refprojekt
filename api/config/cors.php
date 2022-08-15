@@ -21,21 +21,6 @@ return [
     // 'allowed_methods' => ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
 
     'allowed_origins' => ['*'],
-    // 'allowed_origins' => ['localhost:*', '127.0.0.1:*'],
-    // 'allowed_origins' => [
-    //     'http://localhost:3000/', 
-    //     'http://localhost:3000', 
-    //     'localhost:3000/', 
-    //     'localhost:3000', 
-    //     'http://127.0.0.1:3000/',
-    //     'http://127.0.0.1:3000',
-    //     '127.0.0.1:3000/',
-    //     '127.0.0.1:3000',
-    //     'http://192.168.178.22:3000/',
-    //     'http://192.168.178.22:3000',
-    //     '192.168.178.22:3000/',
-    //     '192.168.178.22:3000'
-    // ],
 
     'allowed_origins_patterns' => ['*'],
 
