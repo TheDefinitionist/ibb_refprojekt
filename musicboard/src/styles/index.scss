@@ -1,7 +1,11 @@
 /* stylelint-disable scss/at-rule-no-unknown */
 
 // Style Reset
-* { @apply box-border m-0 p-0 }
+* { 
+	@apply box-border m-0 p-0;
+	background: #222 !important;
+	color: #ccc !important; 
+}
 
 // Using PostCSS + TailwinD
 @tailwind base;
@@ -189,7 +193,7 @@ header {
 		div > img { @apply img-cover }
 	}
 
-	.login, .register, .forgotpw {
+	.login, .register, .forgotpw, .resetpw {
 		display: flex;
 		gap: 15px;
 		.errmsg { @apply text-red-600 bg-red-100 border-2 border-red-500 p-2 mb-2 }
@@ -198,7 +202,7 @@ header {
 			display: grid;
 			grid-template-columns: 250px;
 			label > span { @apply text-green-500 font-bold }
-			#login, #register, #sendforgotpw {
+			#login, #register, #sendforgotpw, #resetpw {
 				@apply cta-red inline mt-5;
 				&.disabled { @apply opacity-[0.5] cursor-not-allowed }
 			}
@@ -214,10 +218,6 @@ header {
 			}
 		}
 	}
-
-	// .logout {}
-	// .subscribe {}
-	// .account {}
 }
 
 // Footer

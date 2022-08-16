@@ -8,7 +8,7 @@ const NotFound = () => {
 		<>
 			<section className="section -mt-5">
 				<div className="mb-10">
-					<h1 className="section__headline">Error 404 - Page Not Found</h1>
+					<h1 className="section__headline">ERROR 404 - Page Not Found</h1>
 				</div>
 				<div className="NotFound">
 					<p>

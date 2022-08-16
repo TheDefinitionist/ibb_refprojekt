@@ -1,16 +1,14 @@
-// Register
+// ResetPassword
 
 import { useRef, useState, useEffect } from 'react'
 import { FaCheck, FaTimes/*, FaCircle*/ } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import betterLog from '../utilities/betterLog'
 import authService from '../utilities/authService'
 
 
 // Regex validation
 const
-	USER_RGX = /^[a-zA-Z][a-zA-Z0-9-_]{3,24}$/,
-	MAIL_RGX = /\S+[^$]@\S+\.\S+/,
 	PWD_RGX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,24}$/,
 	log = msg => new betterLog({ 
 		debug: true, 
@@ -18,45 +16,39 @@ const
 	}).log(msg),
 
 
-	// Register component
-	Register = ({loggedIn, setLoggedIn}) => {
+	// ResetPassword component
+	ResetPassword = () => {
 
 		const
+			loc = useLocation(),
+			// Received resetToken from the password reset email
+			token = loc.pathname.replace('/reset\-password/', ''),
+			email = decodeURIComponent(window.location.toString().split(/email=/)[1]),
+		
 			// Form references
 			userRef = useRef(),
 
-			// Form states
-			[user, setUser] = useState(""),
-			[mail, setMail] = useState(""), 
+			// Form states 
 			[pwd, setPwd] = useState(""),
 			[matchPwd, setMatchPwd] = useState(""), 
 			[errMsg, setErrMsg] = useState(""),
+			[succMsg, setSuccMsg] = useState(""),
 
-			// states for checking Regex
+			// States for checking Regex
 			[mustInclude, setMustInclude] = useState({
 				lower: false, upper: false, minmax: false,
 				number: false, special: false
 			}),
 
 			// Form validation
-			[validName, setValidName] = useState(false),
-			[validMail, setValidMail] = useState(false), 
 			[validPwd, setValidPwd] = useState(false),
-			[validMatch, setValidMatch] = useState(false),
-
-			// Registration complete
-			[succMsg, setSuccMsg] = useState(false)
+			[validMatch, setValidMatch] = useState(false)
 
 		// Operations after pageload
 		// Autofocus on 'username' input field
 		useEffect(() => userRef.current.focus(), [])
 
-
 		useEffect(() => {
-			// Check 'username' validation
-			setValidName(USER_RGX.test(user))
-			// Check 'mail' validation
-			setValidMail(MAIL_RGX.test(mail))
 			// Check 'password' validation and if it matches
 			setValidPwd(PWD_RGX.test(pwd))
 			setValidMatch(pwd === matchPwd)
@@ -71,26 +63,26 @@ const
 			})
 			// Clear error message every time when form states change
 			setErrMsg("")
-		}, [user, mail, pwd, matchPwd])
+		}, [pwd, matchPwd])
 
-		// Submit to register
-		const handleRegister = async e => {
+		// Submit to reset password
+		const handlePasswortReset = async e => {
          e.preventDefault()
          if (pwd === matchPwd) {
             try {
-               const response = await authService.register(user, mail, pwd)
+               const response = await authService.resetPassword(email, pwd)
                log(response)
                if (response.request.status === 200 && response.data?.status === 'success') {
-                  setSuccMsg('Registration was successful.')
+                  setSuccMsg('New password has been successfully set.')
                }
                else if (response.request.status === 422) {
-                  setErrMsg('Mail address already in use.')
+                  setErrMsg('Password doesn\'t meet the requirements.')
                } else {
-                  setErrMsg('Something else is wrong.')
+                  setErrMsg('Unexpected error. Please try again.')
                }
             } catch (error) {
                log(error)
-               setErrMsg('An unexpected error has occured.')
+               setErrMsg('Unexpected error. Please try again.')
             }
          } else {
             setErrMsg('Confirmed password does not match.')
@@ -101,7 +93,7 @@ const
 		const 
 			incl = mustInclude,
 			// Check button status
-			invalid = !validName || !validPwd || !validMatch || !validMail,
+			invalid = !validPwd || !validMatch,
 			// Classes
 			rgx = ['checkrgx--false', 'checkrgx--true'],
 			valid = <span>✓</span>
@@ -110,53 +102,45 @@ const
 		return (
 			<section className="section -mt-5">
 
-				{succMsg ? ( // if successfully registered
+				{ succMsg ? ( // if password is reset
 					<>
 						<div className="mb-10">
 							<h1 className="section__headline">SUCCESS!</h1>
 						</div>
 						<div className="login">
-							<p>Your registration has succeeded. You can now proceed to <Link className="link" to="/login">log in</Link>.</p>
+							<p>You successfully created a new password. You can now proceed to <Link className="link" to="/login">log in</Link>.</p>
 						</div>
 					</>
 
-				) : ( // if unregistered
+				) : ( // if not reset
 					<>
 						<div className="mb-10">
-							<h1 className="section__headline">REGISTER</h1>
+							<h1 className="section__headline">RESET PASSWORD</h1>
 						</div>
-						<div className="register">
+						<div className="resetpw">
 							
-							<form className="register__form" onSubmit={handleRegister}>
-								<label htmlFor="username">Username {validName && valid}</label>
-								<input className="border-4" autoComplete="off" type="text" id="username"
-									ref={userRef} onChange={e => setUser(e.target.value)} required
-								/>
-								<label htmlFor="mail">Mail Address {validMail && valid}</label>
-								<input className="border-4" autoComplete="off" type="email" id="mail"
-									onChange={e => setMail(e.target.value)} required
+							<form className="resetpw__form" onSubmit={handlePasswortReset}>
+								<input className="border-4" autoComplete="off" type="hidden" id="token"
+									 value={token}
 								/>
 								<label htmlFor="password">Password {validPwd && valid}</label>
 								<input className="border-4" type="password" id="password"
-									onChange={(e) => setPwd(e.target.value)} required
+									ref={userRef} onChange={(e) => setPwd(e.target.value)} required
 								/>
 								<label htmlFor="confirm_pwd">Confirm Password {matchPwd && validMatch && valid}</label>
 								<input className="border-4" type="password" id="confirm_pwd"
 									onChange={(e) => setMatchPwd(e.target.value)} required
 								/>
-								<input id="register" value="Register" type="submit"
+								<input id="resetpw" value="Reset Password" type="submit"
 									className={invalid ? "disabled" : null}
 									disabled={invalid ? true : false}
 								/><br></br>
 								<p className={errMsg && "errmsg"}>{errMsg}</p>
-								<p>Do you already have an account?<br />➤ <Link className="link" to="/login">Login</Link></p>
+								<p>Go back to <br />➤ <Link className="link" to="/">Home</Link></p>
 							</form><br />
 
 							<div className="instructions">
-								<p><strong>Username</strong> can contain uppercase, lowercase letters, numbers as well as underscores and hyphens.<br/>
-									It must contain at least 6 characters and a maximum of 24.</p><br />
-								<p><strong>Mail address</strong> must meet the email pattern (ex. name@host.com).</p><br />
-								<p><strong>Password</strong> must include at least:<br />
+								<p><strong>Your new password</strong> must include at least:<br />
 									<span className={incl.lower ? rgx[1] : rgx[0]}>
 										<span className="instructions__facheck">{incl.lower ? <FaCheck /> : <FaTimes />}</span> 1 lowercase character (a-z)
 									</span><br />
@@ -182,4 +166,4 @@ const
 		)
 	}
 
-export { Register }
+export { ResetPassword }

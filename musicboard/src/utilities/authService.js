@@ -74,6 +74,20 @@ const
          })
    },
 
+   resetPw = async (password) => {
+      return await restApi.post('/reset-password', { email, password })
+         .then(response => {
+            log(response)
+            /*if (response.data.authorisation.token) {
+               sessionStorage.setItem(SESSION_USER_TOKEN, JSON.stringify(response.data.authorisation.token))
+            }*/
+            return response
+         }).catch(err => {
+            log(err)
+            return err
+         })
+   },
+
    //refresh = () => {},
 
    logout = () => {
@@ -83,7 +97,7 @@ const
    },
 
    authService = {
-      register, login, isUser, forgotPw, logout 
+      register, login, isUser, forgotPw, resetPw, logout 
    }
 
 export default authService
