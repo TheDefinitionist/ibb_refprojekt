@@ -42,7 +42,7 @@ const
 						setSuccMsg('Please follow the instructions we sent you per mail.')
 					} else if (response.data?.status === 'error') {
 						if (response.data?.sendResetLinkStatus === 'passwords.throttled') { 
-							setErrMsg('You have been sending password resets too many times. Please wait a moment.')
+							setErrMsg('You were requesting password resets too many times. Please wait a moment.')
 						} else {
 							setErrMsg('The email is not registered.')
 						}

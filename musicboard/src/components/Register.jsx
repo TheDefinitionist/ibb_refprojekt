@@ -10,7 +10,7 @@ import authService from '.././utilities/authService'
 // Regex validation
 const
 	USER_RGX = /^[a-zA-Z][a-zA-Z0-9-_]{3,24}$/,
-	MAIL_RGX = /\S+[^$]@\S+\.\S+/,
+	MAIL_RGX = /\S+[^$]?@\S+\.\S+/,
 	PWD_RGX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,24}$/,
 	log = msg => new betterLog({ 
 		debug: true, 
@@ -65,7 +65,7 @@ const
 			setMustInclude({
 				lower: /[a-z]/.test(pwd),
 				upper: /[A-Z]/.test(pwd),
-				minmax: /^.{4,24}$/.test(pwd),
+				minmax: /^.{6,24}$/.test(pwd),
 				number: /[0-9]/.test(pwd),
 				special: /[!@#$%]/.test(pwd)
 			})
@@ -101,9 +101,10 @@ const
 		const 
 			incl = mustInclude,
 			// Check button status
-			invalid = !validName || !validPwd || !validMatch || !validMail,
+			invalid = !validName || !validPwd || !validMatch || !validMail
+			log(invalid)
 			// Classes
-			rgx = ['checkrgx--false', 'checkrgx--true'],
+const			rgx = ['checkrgx--false', 'checkrgx--true'],
 			valid = <span>✓</span>
 
 		// Rendered content
@@ -145,7 +146,7 @@ const
 									onChange={(e) => setMatchPwd(e.target.value)} required
 								/>
 								<input id="register" value="Register" type="submit"
-									className={invalid ? "disabled" : null}
+									className={invalid ? "disabled" : undefined}
 									disabled={invalid ? true : false}
 								/><br></br>
 								<p className={errMsg && "errmsg"}>{errMsg}</p>
@@ -170,7 +171,7 @@ const
 										<span className="instructions__facheck">{incl.special ? <FaCheck /> : <FaTimes />}</span> 1 special character (!@$#%)
 									</span><br />
 									<span className={incl.minmax ? rgx[1] : rgx[0]}>
-										<span className="instructions__facheck">{incl.minmax ? <FaCheck /> : <FaTimes />}</span> 4 characters and a maximum of 24
+										<span className="instructions__facheck">{incl.minmax ? <FaCheck /> : <FaTimes />}</span> 6 characters and a maximum of 24
 									</span><br />
 								</p>
 							</div>

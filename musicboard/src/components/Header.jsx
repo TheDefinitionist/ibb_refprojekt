@@ -2,7 +2,7 @@
 
 import { Link, useLocation } from 'react-router-dom'
 
-const Header = ({ loggedIn, setLoggedIn }) => {
+const Header = ({ loggedIn, logo }) => {
 
    const
       username = localStorage.getItem('mb-user'),
@@ -15,8 +15,8 @@ const Header = ({ loggedIn, setLoggedIn }) => {
       <header>
          <div className="header-wrapper">
             <Link to="/" id="home">
-               <img className="logo" src="assets/img/logo.svg" alt="MusicBoard Logo" title="MusicBoard" />
-               <h1 className="">MusicBoard</h1>
+               <img className="logo" src={logo} alt="MusicBoard Logo" title="MusicBoard" />
+               <h1>MusicBoard</h1>
             </Link>
             <nav>
                <ul id="navbar">

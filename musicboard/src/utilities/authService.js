@@ -74,8 +74,8 @@ const
          })
    },
 
-   resetPw = async (email, password) => {
-      return await restApi.post('/reset-password', { email, password })
+   resetPw = async (token, email, password, password_confirmation) => {
+      return await restApi.post('/reset-password', { token: token, email: email, password: password, password_confirmation: password_confirmation })
          .then(response => {
             log(response)
             /*if (response.data.authorisation.token) {

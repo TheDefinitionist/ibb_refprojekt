@@ -70,11 +70,12 @@ Route::post('/reset-password', function (Request $request) {
         'token' => 'required',
         'email' => 'required|email',
         'password' => 'required|min:6|confirmed',
+        'password_confirmation' => 'required|min:6',
     ]);
  
     $status = Password::reset(
        
-        $request->only('email', 'password', 'password_confirmation', 'token'),
+        $request->only('token', 'email', 'password', 'password_confirmation'),
 
         function ($user, $password) {
             $user->forceFill([
@@ -88,8 +89,10 @@ Route::post('/reset-password', function (Request $request) {
     );
  
     return $status === Password::PASSWORD_RESET
-        ? redirect()->route('login')->with('status', __($status))
-        : back()->withErrors(['email' => [__($status)]]);
+        // ? redirect()->route('login')->with('status', __($status))
+        // : back()->withErrors(['email' => [__($status)]]);
+        ? response()->json(['status' => 'success', 'message' => 'Your password was reset.'])
+        : response()->json(['status' => 'error', 'message' => 'Could not send password.']);
 })->middleware('guest')->name('password.update');
 
 

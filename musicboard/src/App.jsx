@@ -19,6 +19,7 @@ import { NotFound } from './components/NotFound'
 import { ResetPassword } from './components/ResetPassword'
 import Footer from './components/Footer'
 import './styles/index.scss'
+import logo from './assets/logo.svg'
 
 const App = () => {
 
@@ -28,7 +29,7 @@ const App = () => {
 
 	return (
 		<>
-			<Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+			<Header logo={logo} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
 			<main>
 				<Routes>
 					<Route path="/" element={<Home />} />

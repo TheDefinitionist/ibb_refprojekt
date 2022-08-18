@@ -57,7 +57,7 @@ const
 			setMustInclude({
 				lower: /[a-z]/.test(pwd),
 				upper: /[A-Z]/.test(pwd),
-				minmax: /^.{4,24}$/.test(pwd),
+				minmax: /^.{6,24}$/.test(pwd),
 				number: /[0-9]/.test(pwd),
 				special: /[!@#$%]/.test(pwd)
 			})
@@ -65,12 +65,14 @@ const
 			setErrMsg("")
 		}, [pwd, matchPwd])
 
+		// log({email, token})
+
 		// Submit to reset password
 		const handlePasswortReset = async e => {
          e.preventDefault()
          if (pwd === matchPwd) {
             try {
-               const response = await authService.resetPassword(email, pwd)
+               const response = await authService.resetPw(token, email, pwd, matchPwd)
                log(response)
                if (response.request.status === 200 && response.data?.status === 'success') {
                   setSuccMsg('New password has been successfully set.')
@@ -120,15 +122,15 @@ const
 						<div className="resetpw">
 							
 							<form className="resetpw__form" onSubmit={handlePasswortReset}>
-								<input className="border-4" autoComplete="off" type="hidden" id="token"
+								<input className="border-4" type="hidden" name="token" id="token"
 									 value={token}
 								/>
 								<label htmlFor="password">Password {validPwd && valid}</label>
-								<input className="border-4" type="password" id="password"
+								<input className="border-4" type="password" name="password" id="password"
 									ref={userRef} onChange={(e) => setPwd(e.target.value)} required
 								/>
-								<label htmlFor="confirm_pwd">Confirm Password {matchPwd && validMatch && valid}</label>
-								<input className="border-4" type="password" id="confirm_pwd"
+								<label htmlFor="confirm_password">Confirm Password {matchPwd && validMatch && valid}</label>
+								<input className="border-4" type="password" name="password_confirmation" id="password_confirmation"
 									onChange={(e) => setMatchPwd(e.target.value)} required
 								/>
 								<input id="resetpw" value="Reset Password" type="submit"
@@ -154,7 +156,7 @@ const
 										<span className="instructions__facheck">{incl.special ? <FaCheck /> : <FaTimes />}</span> 1 special character (!@$#%)
 									</span><br />
 									<span className={incl.minmax ? rgx[1] : rgx[0]}>
-										<span className="instructions__facheck">{incl.minmax ? <FaCheck /> : <FaTimes />}</span> 4 characters and a maximum of 24
+										<span className="instructions__facheck">{incl.minmax ? <FaCheck /> : <FaTimes />}</span> 6 characters and a maximum of 24
 									</span><br />
 								</p>
 							</div>
