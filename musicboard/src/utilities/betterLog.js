@@ -12,7 +12,12 @@ import path from 'path-browserify'
 
 class betterLog {
    
-   // Initial configuration
+   /**
+    * Initial configuration
+    * 
+    * @param object
+    * @return void
+    */
    constructor (config) {
      
       this.debug = config.debug || false
@@ -20,13 +25,23 @@ class betterLog {
       this.scriptFile = config.import
    }
 
-   // Style filename in CSS syntax
+   /**
+    * Style filename in CSS syntax
+    * 
+    * @param string
+    * @return void
+    */
    setFilenameStyle (style) {
 
       this.filenameStyle = style
    }
 
-   // Logs the content together with the setup
+   /**
+    * Logs the content together with the setup
+    * 
+    * @param any
+    * @return console
+    */
    log (msg) {
 
       if (this.debug && this.filenameStyle) {

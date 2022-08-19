@@ -1,6 +1,6 @@
 // Logout
 
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import authService from '../utilities/authService'
 
 const Logout = ({setLoggedIn}) => {

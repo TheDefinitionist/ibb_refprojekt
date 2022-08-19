@@ -35,7 +35,7 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
-        
+
         return response()->json([
             'status' => 'success',
             'user' => $user,
@@ -44,7 +44,6 @@ class AuthController extends Controller
                 'type' => 'bearer',
             ]
         ]);
-
     }
 
     public function register(Request $request){

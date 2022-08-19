@@ -60,6 +60,22 @@ const
 
    isUser = () => JSON.parse(localStorage.getItem(LOCAL_STORED_USER)),
 
+   me = async () => {
+      return await restApi.get('/me')
+         .then(response => {
+            log(response)
+            /*if (response.data.authorisation.token) {
+               localStorage.setItem(LOCAL_STORED_USER, JSON.stringify(response.data.user.name))
+               localStorage.setItem(LOCAL_STORED_EMAIL, JSON.stringify(response.data.user.email))
+               sessionStorage.setItem(SESSION_USER_TOKEN, JSON.stringify(response.data.authorisation.token))
+            }*/
+            return response
+         }).catch(err => {
+            log(err)
+            return err
+         })
+   },
+
    forgotPw = async email => {
       // const param = new URLSearchParams()
       // param.append('email', email)
@@ -97,7 +113,7 @@ const
    },
 
    authService = {
-      register, login, isUser, forgotPw, resetPw, logout 
+      register, login, isUser, me, forgotPw, resetPw, logout 
    }
 
 export default authService
