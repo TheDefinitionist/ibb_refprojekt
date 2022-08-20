@@ -38,7 +38,6 @@ const App = () => {
 					<Route path="/media" element={<Media />} />
 					<Route path="/login" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 					<Route path="/register" element={<Register loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
-					{/*<Route path="/logout" element={<Logout loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />*/}
 					<Route path="/subscribe" element={<Subscribe />} />
 					<Route path="/account" element={<Account loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 					<Route path="/forgotpw" element={<ForgotPW loggedIn={loggedIn} />} />
