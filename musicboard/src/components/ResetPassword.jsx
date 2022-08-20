@@ -110,7 +110,7 @@ const
 							<h1 className="section__headline">SUCCESS!</h1>
 						</div>
 						<div className="login">
-							<p>You successfully created a new password. You can now proceed to <Link className="link" to="/login">log in</Link>.</p>
+							<p>You successfully created a new password. <br /> You can now proceed to <Link className="link" to="/login">log in</Link>.</p>
 						</div>
 					</>
 

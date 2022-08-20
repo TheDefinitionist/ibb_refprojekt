@@ -13,7 +13,6 @@ import { Register } from './components/Register'
 import { Login } from './components/Login'
 import { Account } from './components/Account'
 import { Subscribe } from './components/Subscribe'
-import { Logout } from './components/Logout'
 import { ForgotPW } from './components/ForgotPW'
 import { NotFound } from './components/NotFound'
 import { ResetPassword } from './components/ResetPassword'
@@ -39,7 +38,7 @@ const App = () => {
 					<Route path="/media" element={<Media />} />
 					<Route path="/login" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 					<Route path="/register" element={<Register loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
-					<Route path="/logout" element={<Logout loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+					{/*<Route path="/logout" element={<Logout loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />*/}
 					<Route path="/subscribe" element={<Subscribe />} />
 					<Route path="/account" element={<Account loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 					<Route path="/forgotpw" element={<ForgotPW loggedIn={loggedIn} />} />

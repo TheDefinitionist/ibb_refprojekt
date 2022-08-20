@@ -1,8 +1,15 @@
 // Header
 
 import { Link, useLocation } from 'react-router-dom'
+import authService from '../utilities/authService'
 
-const Header = ({ loggedIn, logo }) => {
+
+const Header = ({ loggedIn, setLoggedIn, logo }) => {
+
+   const handleLogout = () => {
+      setLoggedIn(false)
+      authService.logout()
+   }
 
    const
       username = localStorage.getItem('mb-user'),
@@ -26,13 +33,13 @@ const Header = ({ loggedIn, logo }) => {
                   <li><Link to="/media" {...active('media')}>MEDIA</Link></li>
                </ul>
             </nav>
-            { loggedIn ? 
+            { loggedIn ?
                <>
                   <div>
-                     { username && <>Welcome, <span className="text-red-500 font-bold"> {username}</span>!&nbsp; |</>}
+                     { username && <>Welcome, <span className="text-red-500 font-bold"> {username}</span>!&nbsp; |</> }
                   </div>
                   <Link className="account" to="/account" {...active('account')}>Account</Link>|
-                  <Link className="logout" to="/logout" {...active('logout')}>Logout</Link>
+                  <Link className="logout" to="/" onClick={handleLogout} {...active('logout')}>Logout</Link>
                </> :
                <>
                   <Link className="login" to="/login" {...active('login')}>Login</Link>|

@@ -1,6 +1,7 @@
 // Login
 
 import { useRef, useState, useEffect } from 'react'
+import { Navigate } from 'react-router-dom'
 import betterLog from '../utilities/betterLog'
 import authService from '../utilities/authService'
 
@@ -63,28 +64,28 @@ const
 
 		// Rendered content
 		return (
-			<section className="section -mt-5 md:block">
-				<div className="mb-10">
-					<h1 className="section__headline">FORGOT PASSWORD</h1>
-				</div>
-				<div className="forgotpw">
-					
-					<form className="forgotpw__form" onSubmit={forgotPWHandler}>
-						<label htmlFor="email">Email</label>
-						<input className="border-4" autoComplete="off" type="email" id="email"
-							ref={emailRef} onChange={e => setEmail(e.target.value)} required
-						/>
-						<input id="sendforgotpw" type="submit" value="Submit" /><br />
-						<p className={errMsg ? "errmsg" : succMsg ? "succmsg" : ""}>{errMsg || succMsg}</p>
-					</form><br />
+			!loggedIn ? (  
+				<section className="section -mt-5 md:block">
+					<div className="mb-10">
+						<h1 className="section__headline">FORGOT PASSWORD</h1>
+					</div>
+					<div className="forgotpw">
+						
+						<form className="forgotpw__form" onSubmit={forgotPWHandler}>
+							<label htmlFor="email">Email</label>
+							<input className="border-4" autoComplete="off" type="email" id="email"
+								ref={emailRef} onChange={e => setEmail(e.target.value)} required
+							/>
+							<input id="sendforgotpw" type="submit" value="Submit" /><br />
+							<p className={errMsg ? "errmsg" : succMsg ? "succmsg" : ""}>{errMsg || succMsg}</p>
+						</form><br />
 
-					<div className="instructions">
 						<p>If you forgot your password you can request to reset the password. <br />
 						Enter your mail address you registered with and we will inform you via mail with further instructions.</p><br />
 					</div>
-
-				</div>
-			</section>
+				</section> 
+			) :
+			<Navigate replace to="/" />
 		)
 	}
 

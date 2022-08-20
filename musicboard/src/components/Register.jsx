@@ -101,10 +101,9 @@ const
 		const 
 			incl = mustInclude,
 			// Check button status
-			invalid = !validName || !validPwd || !validMatch || !validMail
-			log(invalid)
+			invalid = !validName || !validPwd || !validMatch || !validMail,
 			// Classes
-const			rgx = ['checkrgx--false', 'checkrgx--true'],
+			rgx = ['checkrgx--false', 'checkrgx--true'],
 			valid = <span>✓</span>
 
 		// Rendered content
@@ -117,7 +116,7 @@ const			rgx = ['checkrgx--false', 'checkrgx--true'],
 							<h1 className="section__headline">SUCCESS!</h1>
 						</div>
 						<div className="login">
-							<p>Your registration has succeeded. You can now proceed to <Link className="link" to="/login">log in</Link>.</p>
+							<p>Your registration has succeeded. <br />You can now proceed to <Link className="link" to="/login">log in</Link>.</p>
 						</div>
 					</>
 

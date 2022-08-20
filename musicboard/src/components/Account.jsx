@@ -3,8 +3,15 @@
 import useState from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import authService from '../utilities/authService'
+import betterLog from '../utilities/betterLog'
 
-const Account = () => {
+const 
+	log = msg => new betterLog({ 
+		debug: true, 
+		import: import.meta.url 
+	}).log(msg),
+
+	Account = () => {
 
 	const active = true
 
