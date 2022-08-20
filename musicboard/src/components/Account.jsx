@@ -56,7 +56,7 @@ const
 								{ active ? 
 								<>
 									<h3>Change Username</h3>
-									<span className="current-creds"></span>
+									<span className="current-creds"></span>8
 									<form>
 										<label htmlFor="ccp__username">Username</label><br />
 										<input type="text" name="username" id="ccp__username" required /><br />
