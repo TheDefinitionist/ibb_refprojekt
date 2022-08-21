@@ -1,7 +1,7 @@
 // Account
 
-import useState from 'react'
-import { Navigate, Link } from 'react-router-dom'
+// import useState from 'react'
+import { Navigate, Link, useLocation } from 'react-router-dom'
 import authService from '../utilities/authService'
 import betterLog from '../utilities/betterLog'
 
@@ -13,22 +13,22 @@ const
 
 	Account = () => {
 
-	const active = true
+	const active = 5
 
 	const userData = async () => {
 		try {
 
 			const me = await authService.me()
 			if (me) {
-				console.log(me)
+				log(me)
 			}
 	
 		} catch (err) {
-			console.log(err)
+			log(err)
 		}
 	}
 
-	userData()
+	// userData()
 
 	return (
 		<>
@@ -38,12 +38,9 @@ const
 						<h1 className="section__headline">Account</h1>
 					</div>
 					<div className="account">
-						<p>Username: <strong>{/*localStorage.getItem('mb-user')*/ }</strong></p>
-						<hr />
-
-						<div id="ccp">
-							<div className="ccp-sidebar">
-								<h3>Account Panel</h3>
+						<div id="ccp" className="flex gap-20">
+							<div className="ccp-sidebar bg-gray-100 p-5">
+								<h3 className="text-[1em] font-bold uppercase">Account Panel</h3><br />
 								<ul className="ccp__menu">
 									<li className="ccp__menu__item"><Link to="#" className="link">Change Username</Link></li>
 									<li className="ccp__menu__item"><Link to="#" className="link">Change Email Address</Link></li>
@@ -53,62 +50,64 @@ const
 								</ul>
 							</div>
 							<div className="ccp-forms">
-								{ active ? 
+								{ active == 1 ? 
 								<>
-									<h3>Change Username</h3>
-									<span className="current-creds"></span>8
+									<h3 className="text-[1em] font-bold uppercase">Change Username</h3><br />
+									<p>Your current username: <span className="current-creds">{localStorage.getItem('mb-user')}</span></p><br />
 									<form>
 										<label htmlFor="ccp__username">Username</label><br />
-										<input type="text" name="username" id="ccp__username" required /><br />
-
-										<label htmlFor="ccp__mail">Email Address</label><br />
-										<input type="email" name="username" id="ccp__email" required /><br />
-
-										<input type="submit" id="ccp_username__submit" value="Change Username" />
+										<input type="text" name="username" id="ccp__username" className="p-1" required /><br />
+										<input type="submit" id="ccp_username__submit" className="cta-red inline mt-5" value="Save" />
 									</form>
-								</> :
+								</> : active == 2 ?
 								<>
-									<h3>Change Email Address</h3>
-									<span className="current-creds"></span>
+									<h3 className="text-[1em] font-bold uppercase">Change Email Address</h3><br />
+									<p>Your current email address: <span className="current-creds"></span></p><br />
 									<form>
 										<label htmlFor="ccp__mail">Email Address</label><br />
-										<input type="email" name="username" id="ccp__email" required /><br />
-										<input type="submit" id="ccp_email__submit" value="Change Email" />
+										<input type="email" name="email" id="ccp__email" className="p-1" required /><br />
+										<input type="submit" id="ccp_email__submit" className="cta-red inline mt-5" value="Save" />
 									</form>
-									<h3>Change Password</h3>
+								</> : active == 3 ?
+								<>
+									<h3 className="text-[1em] font-bold uppercase">Change Password</h3><br />
 									<form>
 										<label htmlFor="cpp__current-password">Current Password</label><br />
-										<input type="password" name="current_password" id="ccp__current-password" required /><br />
+										<input type="password" name="current_password" id="ccp__current-password" className="p-1" required /><br />
 										
 										<label htmlFor="ccp__new-password">New Password</label><br />
-										<input type="password" name="new_password" id="ccp__new-password" required /><br />
+										<input type="password" name="new_password" id="ccp__new-password" className="p-1" required /><br />
 										
 										<label htmlFor="ccp__confirm-password">Confirm Password</label><br />
-										<input type="password" name="confirm_password" id="ccp__confirm-password" required /><br />
+										<input type="password" name="confirm_password" id="ccp__confirm-password" className="p-1" required /><br />
 										
-										<input type="submit" id="ccp_password__submit" value="Change Password" />
+										<input type="submit" id="ccp_password__submit" className="cta-red inline mt-5" value="Save" />
 									</form>
-									<h3>Subscribe to Premium</h3>
+								</> : active == 4 ?
+								<>
+									<h3 className="text-[1em] font-bold uppercase">Subscribe to Premium</h3><br />
 									<span className="current-creds"></span>
 									<form>
 										<label htmlFor="ccp__creditcardnumber">Credit Card Number</label><br />
-										<input type="tel" name="creditcardnumber" id="ccp__creditcardnumber" inputmode="numeric" 
-											pattern="[0-9\s]{13,19}" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" required /><br />
+										<input type="tel" name="creditcardnumber" id="ccp__creditcardnumber" className="p-1" inputMode="numeric" 
+											pattern="[0-9\s]{13,19}" maxLength="19" placeholder="xxxx xxxx xxxx xxxx" required /><br />
 										
 										<label htmlFor="ccp__zipcode">Billing ZIP Code</label><br />
-										<input type="number" name="zipcode" id="ccp__zipcode" inputmode="numeric" pattern="[0-9]{5}" placeholder="xxxxx" required /><br />
+										<input type="number" name="zipcode" id="ccp__zipcode" className="p-1" inputMode="numeric" pattern="[0-9]{5}" placeholder="xxxxx" required /><br />
 										
 										<label htmlFor="ccp__security">Security Code (last 3 digits)</label><br />
-										<input type="number" name="secruity" id="ccp__security" inputmode="numeric" pattern="[0-9]{3}" placeholder="xxx" required /><br />
+										<input type="number" name="secruity" id="ccp__security" className="p-1" inputMode="numeric" pattern="[0-9]{3}" placeholder="xxx" required /><br />
 
-										<input type="submit" id="ccp_subscribe__submit" value="Subscribe" />
+										<input type="submit" id="ccp_subscribe__submit" className="cta-red inline mt-5" value="Subscribe" />
 									</form>
-									<h3>Dark Mode</h3>
+								</> : active == 5 ?
+								<>
+									<h3 className="text-[1em] font-bold uppercase">Dark Mode</h3><br />
 									<form>
-										<label htmlFor="ccp__dark">Toggle Dark Mode</label><br />
-										<input type="checkbox" name="dark" id="ccp__dark" value="Dark Mode" required />
+										<input type="checkbox" name="dark" id="ccp__dark" className="p-1" value="true" required />
+										<label htmlFor="ccp__dark"> Toggle Dark Mode</label>
 									</form>
-								</> }
+								</> : undefined }
 							</div>
 						</div>
 					</div>

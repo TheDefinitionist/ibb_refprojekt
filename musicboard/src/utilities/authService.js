@@ -24,7 +24,8 @@ const
          'Access-Control-Allow-Origin': '*',
          'Access-Control-Allow-Methods': 'PUT,POST,DELETE,GET,OPTIONS',
          'Access-Control-Allow-Headers': 'Origin,Accept,Authorization,Content-Type,Set-Cookie',
-         'Accept': 'application/json'
+         'Accept': 'application/json',
+         'Authorization': 'Bearer '+sessionStorage.getItem(SESSION_USER_TOKEN)
       }
    }),
 
