@@ -5,16 +5,14 @@ import betterLog from './betterLog'
 
 const 
    API_BASE_URL = 'http://localhost:8000/api',
-   LOCAL_STORED_USER = 'mb-user',
-   LOCAL_STORED_EMAIL = LOCAL_STORED_USER+'-email',
-   SESSION_USER_TOKEN = LOCAL_STORED_USER+'-token',
+   LOCAL_USER = 'mb-user',
+   SESSION_EMAIL = LOCAL_USER+'-email',
+   SESSION_TOKEN = LOCAL_USER+'-token',
 
    log = msg => new betterLog({ 
       debug: true, 
       import: import.meta.url 
    }).log(msg)
-
-// axios.defaults.withCredentials = true
 
 const 
    restApi = axios.create({
@@ -25,7 +23,7 @@ const
          'Access-Control-Allow-Methods': 'PUT,POST,DELETE,GET,OPTIONS',
          'Access-Control-Allow-Headers': 'Origin,Accept,Authorization,Content-Type,Set-Cookie',
          'Accept': 'application/json',
-         'Authorization': 'Bearer '+sessionStorage.getItem(SESSION_USER_TOKEN)
+         'Authorization': 'Bearer '+JSON.parse(sessionStorage.getItem(SESSION_TOKEN))
       }
    }),
 
@@ -34,7 +32,7 @@ const
          .then(response => {
             log(response)
             if (response.data.authorisation.token) {
-               sessionStorage.setItem(SESSION_USER_TOKEN, JSON.stringify(response.data.authorisation.token))
+               sessionStorage.setItem(SESSION_TOKEN, JSON.stringify(response.data.authorisation.token))
             }
             return response
          }).catch(err => {
@@ -48,9 +46,9 @@ const
          .then(response => {
             log(response)
             if (response.data.authorisation.token) {
-               localStorage.setItem(LOCAL_STORED_USER, JSON.stringify(response.data.user.name))
-               localStorage.setItem(LOCAL_STORED_EMAIL, JSON.stringify(response.data.user.email))
-               sessionStorage.setItem(SESSION_USER_TOKEN, JSON.stringify(response.data.authorisation.token))
+               localStorage.setItem(LOCAL_USER, JSON.stringify(response.data.user.name))
+               sessionStorage.setItem(SESSION_EMAIL, JSON.stringify(response.data.user.email))
+               sessionStorage.setItem(SESSION_TOKEN, JSON.stringify(response.data.authorisation.token))
             }
             return response
          }).catch(err => {
@@ -59,17 +57,16 @@ const
          })
    },
 
-   isUser = () => JSON.parse(localStorage.getItem(LOCAL_STORED_USER)),
+   isUser = () => JSON.parse(localStorage.getItem(LOCAL_USER)),
 
    me = async () => {
       return await restApi.get('/me')
          .then(response => {
             log(response)
-            /*if (response.data.authorisation.token) {
-               localStorage.setItem(LOCAL_STORED_USER, JSON.stringify(response.data.user.name))
-               localStorage.setItem(LOCAL_STORED_EMAIL, JSON.stringify(response.data.user.email))
-               sessionStorage.setItem(SESSION_USER_TOKEN, JSON.stringify(response.data.authorisation.token))
-            }*/
+            if (response.data.status === 'success') {
+               localStorage.setItem(LOCAL_USER, JSON.stringify(response.data.user.name))
+               sessionStorage.setItem(SESSION_EMAIL, JSON.stringify(response.data.user.email))
+            }
             return response
          }).catch(err => {
             log(err)
@@ -96,7 +93,7 @@ const
          .then(response => {
             log(response)
             /*if (response.data.authorisation.token) {
-               sessionStorage.setItem(SESSION_USER_TOKEN, JSON.stringify(response.data.authorisation.token))
+               sessionStorage.setItem(SESSION_TOKEN, JSON.stringify(response.data.authorisation.token))
             }*/
             return response
          }).catch(err => {
@@ -109,7 +106,7 @@ const
 
    logout = () => {
       localStorage.clear() && sessionStorage.clear()
-      if (!localStorage.getItem(LOCAL_STORED_USER) && !localStorage.getItem(LOCAL_STORED_EMAIL)) 
+      if (!localStorage.getItem(LOCAL_USER) && !sessionStorage.getItem(SESSION_EMAIL)) 
          log('Storage items successfully removed.') 
    },
 

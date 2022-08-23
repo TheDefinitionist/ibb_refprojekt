@@ -3,7 +3,7 @@
 // Style Reset
 * { 
 	@apply box-border m-0 p-0;
-	// background: #222 !important;
+	// background: #111 !important;
 	// color: #ccc !important; 
 }
 
@@ -223,12 +223,16 @@ header {
 	.account {
 		span.current-creds { @apply font-bold }
 		li.ccp__menu__item {
-			width: 200px;
-			padding: 5px 5px;
-			a { 
-				padding: 5px;
-				width: 100%; 
-				display: block;
+			@apply w-[20vw];
+			a { @apply w-full py-1 block }
+		}
+		.ccp-forms {
+			h3 { @apply text-[1em] font-bold uppercase }
+			.accountinfo {
+				.accountinfo__table {
+					display: flex;
+					li { @apply border w-60 px-2 }
+				}
 			}
 		}
 	}

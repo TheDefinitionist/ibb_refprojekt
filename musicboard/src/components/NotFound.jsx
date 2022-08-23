@@ -1,9 +1,11 @@
 // NotFound
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const NotFound = () => {
 
+	const navigate = useNavigate()
+	
 	return (
 		<>
 			<section className="section -mt-5">
@@ -14,7 +16,7 @@ const NotFound = () => {
 					<p>
 						Sorry, the page you are looking for does not exist.<br />
 						<br />
-						➤ Go back to <Link className="link" to="/">Home</Link>
+						➤ Go <Link className="link" to="#" onClick={()=> navigate(-1)}>back</Link> or go to <Link className="link" to="/">Home</Link>
 					</p>
 				</div>
 			</section>
