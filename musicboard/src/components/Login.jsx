@@ -30,11 +30,6 @@ const
 			emailRef = useRef()
 
 		// Operations after pageload
-		// Redirects after logged in
-		// useEffect(() => {
-		// 	if (loggedIn == true) navigate("/")
-		// }, [loggedIn])
-		// Autofocus on 'email' input field
 		useEffect(() => {
 			if (!loggedIn) emailRef?.current.focus()
 		}, [loggedIn])

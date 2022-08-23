@@ -12,7 +12,7 @@ const Header = ({ loggedIn, setLoggedIn, logo }) => {
    }
 
    const
-      username = localStorage.getItem('mb-user'),
+      username = JSON.parse(localStorage.getItem('mb-user')),
       location = useLocation().pathname,
       active = (path = '') => location === `/${path}` ?
          { "style": { "color": "red" } } :

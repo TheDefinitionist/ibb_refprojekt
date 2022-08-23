@@ -22,24 +22,30 @@ const
 			inactive: { "className": "hover:text-red-500 items-center border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 text-base" }
 		})
 
-		const [username, setUsername] = useState(null)
+		const
+			userData = _ => JSON.parse(localStorage.getItem(_)),
+			[username, setUsername] = useState(userData('mb-user')),
+			[email, setEmail] = useState(userData('mb-user-email')),
+			[regDate, setRegDate] = useState(userData('mb-user-regdate').split(/T/)[0]),
+			[subscribed, setSubscribed] = useState(userData('mb-user-subscribed') || 'No'),
+			[darkMode, setDarkMode] = useState(userData('mb-user-darkmode') || 'disabled')
 
-		const userData = async () => {
-			try {
-				const me = await authService.me()
-				if (me) {
-					log([me.data?.user.name,me.data?.user.email, me.data?.user.created_at])
-				} else {
-					log('err')
-				}
-			} catch (err) {
-				log(err)
-			}
-		}
+		// const getData = async () => {
+		// 	try {
+		// 		const me = await authService.me()
+		// 		if (me) {
+		// 			log([me.data?.user.name,me.data?.user.email, me.data?.user.created_at])
+		// 		} else {
+		// 			log('err')
+		// 		}
+		// 	} catch (err) {
+		// 		log(err)
+		// 	}
+		// }
 
 		// console.log(location)
 
-		userData()
+		// getData()
 
 		return (
 			<>
@@ -75,11 +81,11 @@ const
 													<li>Dark Mode</li>
 												</ul>
 												<ul>
-													<li><strong>seraeztatzertaerz</strong></li>
-													<li><strong>seraeztatzertaerz</strong></li>
-													<li><strong>seraeztatzertaerz</strong></li>
-													<li><strong>seraeztatzertaerz</strong></li>
-													<li><strong>seraeztatzertaerz</strong></li>
+													<li><strong>{username}</strong></li>
+													<li><strong>{email}</strong></li>
+													<li><strong>{regDate}</strong></li>
+													<li><strong>{subscribed}</strong></li>
+													<li><strong>{darkMode}</strong></li>
 												</ul>
 											</div>
 										</div>

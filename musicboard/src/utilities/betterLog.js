@@ -41,9 +41,9 @@ class betterLog {
     */
    log (msg) {
 
-      if (this.debug && this.filenameStyle) {
-
+      if (this.debug && this.filenameStyle && this.scriptFile) {
          const filename = path.basename(this.scriptFile).replace(/\?.+/, '')
+
          return console.info('%c'+filename, this.filenameStyle , msg)
       }
    }
