@@ -28,7 +28,7 @@ const
 			try {
 				const me = await authService.me()
 				if (me) {
-					log([me.data.user.name,me.data.user.email, me.data.user.created_at])
+					log([me.data?.user.name,me.data?.user.email, me.data?.user.created_at])
 				} else {
 					log('err')
 				}
