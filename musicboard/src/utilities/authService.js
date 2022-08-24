@@ -8,7 +8,7 @@ const API_BASE_URL = "http://localhost:8000/api",
 	LOCAL_EMAIL = LOCAL_USER + "-email",
 	LOCAL_TOKEN = LOCAL_USER + "-token",
 	LOCAL_REGDATE = LOCAL_USER + "-regdate",
-	LOCAL_DARKMODE = "mb-darkmode",
+	LOCAL_DARKMODE = LOCAL_USER + "-darkmode",
 	log = (msg) =>
 		new betterLog({
 			debug: true,
@@ -34,7 +34,7 @@ restApi.interceptors.request.use(
 	},
 	error => Promise.reject(error)
 )
-console.log({localStorage})
+
 const register = async (name, email, password) => {
 		return await restApi
 			.post("/register", { name, email, password })
@@ -57,6 +57,7 @@ const register = async (name, email, password) => {
 					localStorage.setItem(LOCAL_USER, JSON.stringify(response.data.user.name))
 					localStorage.setItem(LOCAL_EMAIL, JSON.stringify(response.data.user.email))
 					localStorage.setItem(LOCAL_REGDATE, JSON.stringify(response.data.user.created_at))
+					localStorage.setItem(LOCAL_DARKMODE, false)
 				}
 				return response
 			})

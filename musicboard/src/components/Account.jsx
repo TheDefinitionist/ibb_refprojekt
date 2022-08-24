@@ -1,6 +1,6 @@
 // Account
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Navigate, Link, useLocation } from 'react-router-dom'
 import authService from '../utilities/authService'
 import betterLog from '../utilities/betterLog'
@@ -23,29 +23,22 @@ const
 		})
 
 		const
-			userData = _ => JSON.parse(localStorage.getItem(_)),
+			userData = key => JSON.parse(localStorage.getItem(key)),
 			[username, setUsername] = useState(userData('mb-user')),
 			[email, setEmail] = useState(userData('mb-user-email')),
-			[regDate, setRegDate] = useState(userData('mb-user-regdate').split(/T/)[0]),
+			[regDate, setRegDate] = useState(userData('mb-user-regdate')?.split(/T/)[0]),
 			[subscribed, setSubscribed] = useState(userData('mb-user-subscribed') || 'No'),
-			[darkMode, setDarkMode] = useState(userData('mb-user-darkmode') || 'disabled')
-
-		// const getData = async () => {
-		// 	try {
-		// 		const me = await authService.me()
-		// 		if (me) {
-		// 			log([me.data?.user.name,me.data?.user.email, me.data?.user.created_at])
-		// 		} else {
-		// 			log('err')
-		// 		}
-		// 	} catch (err) {
-		// 		log(err)
-		// 	}
-		// }
-
-		// console.log(location)
-
-		// getData()
+			[darkMode, setDarkMode] = useState(userData('mb-user-darkmode') || false)
+			
+		useEffect(() => {
+			if (darkMode) {
+				document.querySelector('body, section').classList.add('dark-theme')
+				localStorage.setItem('mb-user-darkmode', true)			
+			} else {
+				document.querySelector('body, section').classList.remove('dark-theme')
+				localStorage.setItem('mb-user-darkmode', false)
+			}
+		}, [darkMode])
 
 		return (
 			<>
@@ -85,14 +78,14 @@ const
 													<li><strong>{email}</strong></li>
 													<li><strong>{regDate}</strong></li>
 													<li><strong>{subscribed}</strong></li>
-													<li><strong>{darkMode}</strong></li>
+													<li><strong>{darkMode ? 'Enabled' : 'Disabled'}</strong></li>
 												</ul>
 											</div>
 										</div>
 										: location === 'change-username' ?
 										<>
 											<h3 className="text-[1em] font-bold uppercase">Change Username</h3><br />
-											<p>Your current username: <span className="current-creds">{localStorage.getItem('mb-user')}</span></p><br />
+											<p>Your current username: <span className="current-creds">{username}</span></p><br />
 											<form>
 												<label htmlFor="ccp__username">Username</label><br />
 												<input type="text" name="username" id="ccp__username" className="p-1" required /><br />
@@ -143,9 +136,13 @@ const
 										</> : location === 'darkmode' ?
 										<>
 											<h3 className="text-[1em] font-bold uppercase">Dark Mode</h3><br />
-											<form>
-												<input type="checkbox" name="dark" id="ccp__dark" className="p-1" value="true" required />
-												<label htmlFor="ccp__dark"> Toggle Dark Mode</label>
+											<form className="form-control">
+												<label htmlFor="ccp__dark" className="pb-3">Toggle Dark Mode</label>
+												<input type="checkbox" 
+													checked={darkMode === true ? true : darkMode === false ? false : undefined}  
+													onChange={(e) => setDarkMode(e.target.checked)} 
+													name="dark" id="ccp__dark" className="toggle toggle-md toggle-accent bg-red-500" value="true" required 
+												/>
 											</form>
 										</> : undefined}
 								</div>

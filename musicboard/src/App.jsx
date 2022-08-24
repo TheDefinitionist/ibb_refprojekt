@@ -20,11 +20,20 @@ import Footer from './components/Footer'
 import './styles/index.scss'
 import logo from './assets/logo.svg'
 
+
+
 const App = () => {
 
 	const [loggedIn, setLoggedIn] = useState(false)
 
 	useEffect(()=> setLoggedIn(authService.isUser()), [])
+	useEffect(()=> {
+		if (JSON.parse(localStorage.getItem('mb-user-darkmode'))) {
+			document.querySelector('body, section').classList.add('dark-theme')
+		} else if (!JSON.parse(localStorage.getItem('mb-user-darkmode'))) {
+			document.querySelector('body, section').classList.remove('dark-theme')
+		}
+	})
 
 	return (
 		<>
@@ -39,7 +48,7 @@ const App = () => {
 					<Route path="/login" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 					<Route path="/register" element={<Register loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 					<Route path="/subscribe" element={<Subscribe />} />
-					<Route path="/account" element={<Account loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+					<Route path="/account" element={<Account />} />
 						<Route path="account/information" element={<Account loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 						<Route path="account/change-username" element={<Account loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 						<Route path="account/change-email" element={<Account loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />

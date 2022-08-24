@@ -19,8 +19,15 @@
 	.img-cover { @apply w-full h-full object-cover }
 	.flex-center { @apply flex justify-center items-center }
 	.cta-red { @apply inline-flex text-white text-lg uppercase font-bold 
-		bg-red-600 border-0 py-2 px-4 focus:outline-none hover:bg-red-700 }
+		bg-red-600 border-0 py-2 px-4 focus:outline-none hover:bg-red-700 
+	}
 }
+
+// Dark Theme Style
+.dark-theme {
+	@apply bg-gray-700; 
+}
+
 
 // Variables
 $bodyColor: #eee;
