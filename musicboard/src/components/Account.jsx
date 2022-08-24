@@ -1,5 +1,6 @@
 // Account
 
+import { useInsertionEffect } from 'react'
 import { useState, useEffect } from 'react'
 import { Navigate, Link, useLocation } from 'react-router-dom'
 import authService from '../utilities/authService'
@@ -19,7 +20,7 @@ const
 		Utils.setActive({
 			location: location,
 			active: { "style": { "color": "red" } },
-			inactive: { "className": "hover:text-red-500 items-center border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 text-base" }
+			inactive: { "className": "inactive" }
 		})
 
 		const
@@ -50,14 +51,14 @@ const
 						<div className="account">
 							<div id="ccp" className="flex gap-20">
 								<div className="ccp-sidebar bg-gray-100 p-5">
-									<h3 className="text-[1em] font-bold uppercase">Account Panel</h3><br />
+									<h3 className="text-[1em] font-bold uppercase">Menu Panel</h3><br />
 									<ul className="ccp__menu">
 										<li className="ccp__menu__item"><Link {...Utils.activeStyle('information')} to="/account/information">Account Information</Link></li>
 										<li className="ccp__menu__item"><Link {...Utils.activeStyle('change-username')} to="/account/change-username">Change Username</Link></li>
-										<li className="ccp__menu__item"><Link {...Utils.activeStyle('change-email')} to="/account/change-email" >Change Email Address</Link></li>
+										<li className="ccp__menu__item"><Link {...Utils.activeStyle('change-email')} to="/account/change-email">Change Email Address</Link></li>
 										<li className="ccp__menu__item"><Link {...Utils.activeStyle('change-password')}to="/account/change-password">Change Password</Link></li>
 										<li className="ccp__menu__item"><Link {...Utils.activeStyle('premium')} to="/account/premium">Subscribe for Premium</Link></li>
-										<li className="ccp__menu__item"><Link {...Utils.activeStyle('darkmode')} to="/account/darkmode">Toggle Light/Dark Mode</Link></li>
+										<li className="ccp__menu__item"><Link {...Utils.activeStyle('darkmode')} to="/account/darkmode">Toggle Dark Mode</Link></li>
 									</ul>
 								</div>
 								<div className="ccp-forms">
@@ -137,14 +138,20 @@ const
 										<>
 											<h3 className="text-[1em] font-bold uppercase">Dark Mode</h3><br />
 											<form className="form-control">
-												<label htmlFor="ccp__dark" className="pb-3">Toggle Dark Mode</label>
+												<label htmlFor="ccp__dark" className="pb-3">Toggle Dark Mode (Background)</label>
 												<input type="checkbox" 
 													checked={darkMode === true ? true : darkMode === false ? false : undefined}  
 													onChange={(e) => setDarkMode(e.target.checked)} 
 													name="dark" id="ccp__dark" className="toggle toggle-md toggle-accent bg-red-500" value="true" required 
 												/>
 											</form>
-										</> : undefined}
+										</> : 
+										<>
+											<h3 className="text-[1em] font-bold uppercase">Customer Account Panel</h3><br />
+											<p>This is your customer account panel. <br /> 
+											You can edit your account data by going through the menu on the left.</p>
+										</>
+										}
 								</div>
 							</div>
 						</div>

@@ -66,7 +66,7 @@ class Utils {
     * @returns {object}
     */
    static activeStyle(path) {
-      if (Utils.location && Utils.active && Utils.inactive) {
+      if (Utils.active && Utils.inactive) {
          
          return Utils.location === path ? Utils.active : Utils.inactive
       }
