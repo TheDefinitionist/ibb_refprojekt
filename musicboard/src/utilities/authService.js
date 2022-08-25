@@ -47,6 +47,7 @@ const register = async (name, email, password) => {
 				return err
 			})
 	},
+
 	login = async (email, password) => {
 		return await restApi
 			.post("/login", { email, password })
@@ -66,7 +67,9 @@ const register = async (name, email, password) => {
 				return err
 			})
 	},
+
 	isUser = () => JSON.parse(localStorage.getItem(LOCAL_USER)),
+	
 	me = async () => {
 		return await restApi
 			.get("/me")
@@ -84,6 +87,7 @@ const register = async (name, email, password) => {
 				return err
 			})
 	},
+
 	forgotPw = async (email) => {
 		return await restApi
 			.post("/forgot-password", { email })
@@ -96,6 +100,7 @@ const register = async (name, email, password) => {
 				return err
 			})
 	},
+
 	resetPw = async (token, email, password, password_confirmation) => {
 		return await restApi
 			.post("/reset-password", {
@@ -113,20 +118,39 @@ const register = async (name, email, password) => {
 				return err
 			})
 	},
+
+	updateUsername = async (username) => {
+
+		try {
+			const userID = await restApi.get("/me")
+
+			return await restApi
+				.put("/updateusername/"+userID.data.user.id, {
+					name: username
+				})
+				.then((response) => {
+					log(response)
+					return response
+				})
+				.catch((err) => {
+					log(err)
+					return err
+				})
+		} catch (err) {
+			log(err)
+			return err
+		} 
+	},
+
 	//refresh = () => {},
 
 	logout = () => {
 		localStorage.clear() && sessionStorage.clear()
 		if (!localStorage.getItem(LOCAL_USER) && !localStorage.getItem(LOCAL_EMAIL) && !localStorage.getItem(LOCAL_REGDATE)) log("Storage items successfully removed.")
 	},
+
 	authService = {
-		register,
-		login,
-		isUser,
-		me,
-		forgotPw,
-		resetPw,
-		logout,
+		register, login, isUser, me, forgotPw, resetPw, updateUsername, logout
 	}
 
 export default authService

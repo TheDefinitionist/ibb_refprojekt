@@ -30,7 +30,6 @@ const
 			[mail, setMail] = useState(""), 
 			[pwd, setPwd] = useState(""),
 			[matchPwd, setMatchPwd] = useState(""), 
-			[errMsg, setErrMsg] = useState(""),
 
 			// states for checking Regex
 			[mustInclude, setMustInclude] = useState({
@@ -44,13 +43,14 @@ const
 			[validPwd, setValidPwd] = useState(false),
 			[validMatch, setValidMatch] = useState(false),
 
-			// Registration complete
-			[succMsg, setSuccMsg] = useState(false)
+			// Message when registration completes
+			[succMsg, setSuccMsg] = useState(false),
+			// Message when registration fails
+			[errMsg, setErrMsg] = useState("")
 
 		// Operations after pageload
 		// Autofocus on 'username' input field
 		useEffect(() => userRef.current.focus(), [])
-
 
 		useEffect(() => {
 			// Check 'username' validation

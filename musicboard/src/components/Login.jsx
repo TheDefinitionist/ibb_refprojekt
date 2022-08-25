@@ -19,7 +19,7 @@ const
 			navigate = useNavigate(),
 
 			// Global state variables
-			{ setAuth } = useContext(AuthContext),
+			// { setAuth } = useContext(AuthContext),
 
 			// State variables
 			[email, setEmail] = useState(''),
@@ -44,7 +44,7 @@ const
 				log(response)
             if (response.request.status === 200 && response.data.status === 'success') {
 					const accessToken = response?.data.accessToken
-					setAuth({ email, pwd, accessToken })
+					// setAuth({ email, pwd, accessToken })
 					setEmail("")
 					setPwd("")
 					setLoggedIn(true)

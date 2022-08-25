@@ -3,15 +3,13 @@
 import { Link, useLocation } from 'react-router-dom'
 import authService from '../utilities/authService'
 
-
 const Header = ({ loggedIn, setLoggedIn, logo }) => {
 
-   const handleLogout = () => {
-      setLoggedIn(false)
-      authService.logout()
-   }
-
-   const
+   const 
+      handleLogout = () => {
+         setLoggedIn(false)
+         authService.logout()
+      },
       username = JSON.parse(localStorage.getItem('mb-user')),
       location = useLocation().pathname,
       active = (path = '') => location === `/${path}` ?

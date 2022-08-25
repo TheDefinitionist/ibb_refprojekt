@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
+use App\Http\Controllers\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,7 @@ use Illuminate\Auth\Events\PasswordReset;
 
 /* ----- ROUTES WITH AUTHCONTROLLER ----- */
 
-// Routes that require authorization
+// Routes for authenticated user activities
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
     Route::post('register', 'register');
@@ -33,6 +34,10 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('me', 'me');
 });
 
+// Routes for the customer account panel
+Route::controller(AccountController::class)->group(function () {
+    Route::put('updateusername/{id}', 'updateUsername');
+});
 
 
 /* ----- RESET PASSWORD ROUTES ----- */
