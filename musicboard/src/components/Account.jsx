@@ -28,6 +28,7 @@ const
 			{ ctxEmail, setCtxEmail } = useContext(AuthContext),
 			userData = key => JSON.parse(localStorage.getItem(key)),
 			regDate = userData('mb-user-regdate')?.split(/T/)[0],
+			subscribed = false,
 
 			token = userData('mb-user-token'),
 
@@ -42,7 +43,6 @@ const
 			[curPassword, setCurPassword] = useState(null),
 			[newPassword, setNewPassword] = useState(null),
 			[matchPassword, setMatchPassword] = useState(null),
-			[subscribed, setSubscribed] = useState(userData('mb-user-subscribed') || 'No'),
 			[darkMode, setDarkMode] = useState(userData('mb-user-darkmode') || false)
 
 		useEffect(() => {
@@ -134,7 +134,6 @@ const
 										<li className="ccp__menu__item" onClick={clearMsg}><Link {...Utils.activeStyle('change-username')} to="/account/change-username">Change Username</Link></li>
 										<li className="ccp__menu__item" onClick={clearMsg}><Link {...Utils.activeStyle('change-email')} to="/account/change-email">Change Email Address</Link></li>
 										<li className="ccp__menu__item" onClick={clearMsg}><Link {...Utils.activeStyle('change-password')} to="/account/change-password">Change Password</Link></li>
-										<li className="ccp__menu__item" onClick={clearMsg}><Link {...Utils.activeStyle('premium')} to="/account/premium">Subscribe for Premium</Link></li>
 										<li className="ccp__menu__item" onClick={clearMsg}><Link {...Utils.activeStyle('darkmode')} to="/account/darkmode">Toggle Dark Mode</Link></li>
 									</ul>
 								</div>
@@ -155,7 +154,7 @@ const
 														<li><strong>{username || ctxUsername}</strong></li>
 														<li><strong>{email || ctxEmail}</strong></li>
 														<li><strong>{regDate}</strong></li>
-														<li><strong>{subscribed}</strong></li>
+														<li><strong>{subscribed ? 'Yes' : 'No'}</strong></li>
 														<li><strong>{darkMode ? 'Enabled' : 'Disabled'}</strong></li>
 													</ul>
 												</div>
@@ -187,7 +186,7 @@ const
 										: location === 'change-password' ?
 											<>
 												<h3 className="text-[1em] font-bold uppercase">Change Password</h3><br />
-												<p className="instructions">Password needs to meet the folwowing requirements: <br />
+												<p className="instructions">Password needs to meet the following requirements: <br />
 													<strong>1</strong> uppercase character (A-Z)<br />
 													<strong>1</strong> number (0-9)<br />
 													<strong>1</strong> special character (!@$#%)<br />
@@ -205,25 +204,7 @@ const
 													<input type="password" name="confirm_password" id="ccp__confirm-password" className="p-1" 
 														onChange={e => setMatchPassword(e.target.value)} required /><br />
 
-													<input type="submit" id="ccp_password__submit" onClick={() => {setErrMsg(''); setSuccMsg('')}} className="cta-red inline mt-5" value="Save" />
-												</form>
-											</>
-										: location === 'premium' ?
-											<>
-												<h3 className="text-[1em] font-bold uppercase">Subscribe to Premium</h3><br />
-												<span className="current-creds"></span>
-												<form>
-													<label htmlFor="ccp__creditcardnumber">Credit Card Number</label><br />
-													<input type="tel" name="creditcardnumber" id="ccp__creditcardnumber" className="p-1" inputMode="numeric"
-														pattern="[0-9\s]{13,19}" maxLength="19" placeholder="xxxx xxxx xxxx xxxx" required /><br />
-
-													<label htmlFor="ccp__zipcode">Billing ZIP Code</label><br />
-													<input type="number" name="zipcode" id="ccp__zipcode" className="p-1" inputMode="numeric" pattern="[0-9]{5}" placeholder="xxxxx" required /><br />
-
-													<label htmlFor="ccp__security">Security Code (last 3 digits)</label><br />
-													<input type="number" name="secruity" id="ccp__security" className="p-1" inputMode="numeric" pattern="[0-9]{3}" placeholder="xxx" required /><br />
-
-													<input type="submit" id="ccp_subscribe__submit" className="cta-red inline mt-5" value="Subscribe" />
+													<input type="submit" id="ccp_password__submit" onClick={() => {setErrMsg(''); setSuccMsg('')}} className="cta-red inline mt-5" value="Change Password" />
 												</form>
 											</>
 										: location === 'darkmode' ?

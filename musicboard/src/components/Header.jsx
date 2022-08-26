@@ -44,9 +44,6 @@ const Header = ({ loggedIn, setLoggedIn, logo }) => {
                   <Link className="register" to="/register" {...active('register')}>Register</Link>
                </>
             }
-            <button className="subscribe" onClick={() => alert('hi')}>
-               <i className="fa-solid fa-crown"></i>&nbsp;PREMIUM
-            </button>
          </div>
       </header>
    )

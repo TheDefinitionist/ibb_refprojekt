@@ -53,7 +53,6 @@ const App = () => {
 							<Route path="account/change-username" element={<Account loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 							<Route path="account/change-email" element={<Account loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 							<Route path="account/change-password" element={<Account loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
-							<Route path="account/premium" element={<Account loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 							<Route path="account/darkmode" element={<Account loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
 						<Route path="/forgotpw" element={<ForgotPW loggedIn={loggedIn} />} />
 						<Route path="/reset-password/*" element={<ResetPassword />} />
