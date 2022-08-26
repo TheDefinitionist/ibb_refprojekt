@@ -105,6 +105,17 @@ header {
 	.errmsg { @apply text-red-600 bg-red-100 border-2 border-red-500 p-2 mb-2 }
 	.succmsg { @apply text-green-600 bg-green-100 border-2 border-green-500 p-2 mb-2 }
 
+	.instructions {
+		@apply text-sm;
+		p {
+			span {
+				&.checkrgx--true { color: green; }
+				&.checkrgx--false { color: red; }
+				.instructions__facheck * { @apply inline }
+			}
+		}
+	}
+
 	// News
 	.news {
 		display: grid;
@@ -214,16 +225,6 @@ header {
 			#login, #register, #sendforgotpw, #resetpw {
 				@apply cta-red inline mt-5;
 				&.disabled { @apply opacity-[0.5] cursor-not-allowed }
-			}
-		}
-		.instructions {
-			@apply text-sm;
-			p {
-				span {
-					&.checkrgx--true { color: green; }
-					&.checkrgx--false { color: red; }
-					.instructions__facheck * { @apply inline }
-				}
 			}
 		}
 	}

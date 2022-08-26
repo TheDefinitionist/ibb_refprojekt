@@ -36,21 +36,18 @@ restApi.interceptors.request.use(
 )
 
 const register = async (name, email, password) => {
-		return await restApi
-			.post("/register", { name, email, password })
+		return await restApi.post("/register", { name, email, password })
 			.then((response) => {
 				log(response)
 				return response
-			})
-			.catch((err) => {
+			}).catch((err) => {
 				log(err)
 				return err
 			})
 	},
 
 	login = async (email, password) => {
-		return await restApi
-			.post("/login", { email, password })
+		return await restApi.post("/login", { email, password })
 			.then((response) => {
 				log(response)
 				if (response.data.authorization.token) {
@@ -61,8 +58,7 @@ const register = async (name, email, password) => {
 					localStorage.setItem(LOCAL_DARKMODE, false)
 				}
 				return response
-			})
-			.catch((err) => {
+			}).catch((err) => {
 				log(err)
 				return err
 			})
@@ -71,9 +67,7 @@ const register = async (name, email, password) => {
 	isUser = () => JSON.parse(localStorage.getItem(LOCAL_USER)),
 	
 	me = async () => {
-		return await restApi
-			.get("/me")
-			.then((response) => {
+		return await restApi.get("/me").then((response) => {
 				log(response)
 				if (response.data.status === "success") {
 					localStorage.setItem(LOCAL_USER, JSON.stringify(response.data.user.name))
@@ -81,39 +75,33 @@ const register = async (name, email, password) => {
 					localStorage.setItem(LOCAL_REGDATE, JSON.stringify(response.data.user.created_at))
 				}
 				return response
-			})
-			.catch((err) => {
+			}).catch((err) => {
 				log(err)
 				return err
 			})
 	},
 
 	forgotPw = async (email) => {
-		return await restApi
-			.post("/forgot-password", { email })
+		return await restApi.post("/forgot-password", { email })
 			.then((response) => {
 				log(response)
 				return response
-			})
-			.catch((err) => {
+			}).catch((err) => {
 				log(err)
 				return err
 			})
 	},
 
 	resetPw = async (token, email, password, password_confirmation) => {
-		return await restApi
-			.post("/reset-password", {
+		return await restApi.post("/reset-password", {
 				token: token,
 				email: email,
 				password: password,
 				password_confirmation: password_confirmation,
-			})
-			.then((response) => {
+			}).then((response) => {
 				log(response)
 				return response
-			})
-			.catch((err) => {
+			}).catch((err) => {
 				log(err)
 				return err
 			})
@@ -122,15 +110,12 @@ const register = async (name, email, password) => {
 	updateUsername = async (username) => {
 		try {
 			const userID = await restApi.get("/me")
-			return await restApi
-				.put("/updateusername/"+userID.data.user.id, {
+			return await restApi.put("/updateusername/"+userID.data.user.id, {
 					name: username
-				})
-				.then((response) => {
+				}).then((response) => {
 					log(response)
 					return response
-				})
-				.catch((err) => {
+				}).catch((err) => {
 					log(err)
 					return err
 				})
@@ -146,12 +131,45 @@ const register = async (name, email, password) => {
 			return await restApi
 				.put("/updateemail/"+userID.data.user.id, {
 					email: email
-				})
-				.then((response) => {
+				}).then((response) => {
 					log(response)
 					return response
+				}).catch((err) => {
+					log(err)
+					return err
 				})
-				.catch((err) => {
+		} catch (err) {
+			log(err)
+			return err
+		} 
+	},
+
+	updatePassword = async (curPassword, newPassword) => {
+		try {
+			const me = await restApi.get("/me")
+			log(me.data.user.email)
+			return await restApi
+				.post("/authenticate", {
+					email: me.data.user.email,
+					password: curPassword
+				}) .then(async (response) => {
+					log(response)
+					if (response?.data.status === "success") {
+						log(me.data.user.id)
+						return await restApi
+							.put("/updatepassword/"+me.data.user.id, {
+								password: newPassword
+							}).then((response) => {
+								log(response)
+								return response
+							}).catch((err) => {
+								log(err)
+								return err
+							})
+					} else if (response.data.status === 'error') {
+						return response.data.message
+					}
+				}).catch((err) => {
 					log(err)
 					return err
 				})
@@ -168,7 +186,7 @@ const register = async (name, email, password) => {
 	},
 
 	authService = {
-		register, login, isUser, me, forgotPw, resetPw, updateUsername, updateEmail, logout
+		register, login, isUser, me, forgotPw, resetPw, updateUsername, updateEmail, updatePassword, logout
 	}
 
 export default authService

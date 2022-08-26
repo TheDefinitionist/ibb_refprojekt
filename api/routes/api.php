@@ -28,6 +28,7 @@ use App\Http\Controllers\AccountController;
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
     Route::post('register', 'register');
+    Route::post('authenticate', 'authenticate');
     Route::put('update/{id}', 'update');
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
@@ -38,6 +39,7 @@ Route::controller(AuthController::class)->group(function () {
 Route::controller(AccountController::class)->group(function () {
     Route::put('updateusername/{id}', 'updateUsername');
     Route::put('updateemail/{id}', 'updateEmail');
+    Route::put('updatepassword/{id}', 'updatePassword');
 });
 
 

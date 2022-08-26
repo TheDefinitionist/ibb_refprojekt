@@ -27,6 +27,7 @@ const
 			{ ctxUsername, setCtxUsername } = useContext(AuthContext),
 			{ ctxEmail, setCtxEmail } = useContext(AuthContext),
 			userData = key => JSON.parse(localStorage.getItem(key)),
+			regDate = userData('mb-user-regdate')?.split(/T/)[0],
 
 			token = userData('mb-user-token'),
 
@@ -38,7 +39,9 @@ const
 			// Form states
 			[username, setUsername] = useState(userData('mb-user')),
 			[email, setEmail] = useState(userData('mb-user-email')),
-			[regDate, setRegDate] = useState(userData('mb-user-regdate')?.split(/T/)[0]),
+			[curPassword, setCurPassword] = useState(null),
+			[newPassword, setNewPassword] = useState(null),
+			[matchPassword, setMatchPassword] = useState(null),
 			[subscribed, setSubscribed] = useState(userData('mb-user-subscribed') || 'No'),
 			[darkMode, setDarkMode] = useState(userData('mb-user-darkmode') || false)
 
@@ -88,7 +91,29 @@ const
 			}
 		}
 
-		const clearValidationMessages = () => {
+		const changePassword = async (e) => {
+			e.preventDefault()
+			// log({ctxEmail,curPassword,matchPassword,newPassword})
+			if (newPassword === matchPassword) {
+				try {
+					const response = await authService.updatePassword(curPassword, newPassword)
+					if (response.status === 200) {
+						if (response.data.status === 'success') {
+							setEmail(e.target.value)
+							setSuccMsg(response.data.message)
+						} else setErrMsg(response.data.message) 
+					} else setErrMsg(response)
+					log(response)
+				} catch (error) {
+					log(error)
+				}
+			} else {
+				setErrMsg('Confirmed password does not match.')
+			}
+		}
+
+		// Clear validation messages
+		const clearMsg = () => {
 			setSuccMsg('')
 			setErrMsg('')
 		}
@@ -105,12 +130,12 @@ const
 								<div className="ccp-sidebar bg-gray-100 p-5">
 									<h3 className="text-[1em] font-bold uppercase">Menu Panel</h3><br />
 									<ul className="ccp__menu">
-										<li className="ccp__menu__item" onClick={clearValidationMessages}><Link {...Utils.activeStyle('information')} to="/account/information">Account Information</Link></li>
-										<li className="ccp__menu__item" onClick={clearValidationMessages}><Link {...Utils.activeStyle('change-username')} to="/account/change-username">Change Username</Link></li>
-										<li className="ccp__menu__item" onClick={clearValidationMessages}><Link {...Utils.activeStyle('change-email')} to="/account/change-email">Change Email Address</Link></li>
-										<li className="ccp__menu__item" onClick={clearValidationMessages}><Link {...Utils.activeStyle('change-password')} to="/account/change-password">Change Password</Link></li>
-										<li className="ccp__menu__item" onClick={clearValidationMessages}><Link {...Utils.activeStyle('premium')} to="/account/premium">Subscribe for Premium</Link></li>
-										<li className="ccp__menu__item" onClick={clearValidationMessages}><Link {...Utils.activeStyle('darkmode')} to="/account/darkmode">Toggle Dark Mode</Link></li>
+										<li className="ccp__menu__item" onClick={clearMsg}><Link {...Utils.activeStyle('information')} to="/account/information">Account Information</Link></li>
+										<li className="ccp__menu__item" onClick={clearMsg}><Link {...Utils.activeStyle('change-username')} to="/account/change-username">Change Username</Link></li>
+										<li className="ccp__menu__item" onClick={clearMsg}><Link {...Utils.activeStyle('change-email')} to="/account/change-email">Change Email Address</Link></li>
+										<li className="ccp__menu__item" onClick={clearMsg}><Link {...Utils.activeStyle('change-password')} to="/account/change-password">Change Password</Link></li>
+										<li className="ccp__menu__item" onClick={clearMsg}><Link {...Utils.activeStyle('premium')} to="/account/premium">Subscribe for Premium</Link></li>
+										<li className="ccp__menu__item" onClick={clearMsg}><Link {...Utils.activeStyle('darkmode')} to="/account/darkmode">Toggle Dark Mode</Link></li>
 									</ul>
 								</div>
 								<div className="ccp-forms">
@@ -162,17 +187,25 @@ const
 										: location === 'change-password' ?
 											<>
 												<h3 className="text-[1em] font-bold uppercase">Change Password</h3><br />
-												<form>
+												<p className="instructions">Password needs to meet the folwowing requirements: <br />
+													<strong>1</strong> uppercase character (A-Z)<br />
+													<strong>1</strong> number (0-9)<br />
+													<strong>1</strong> special character (!@$#%)<br />
+													<strong>6</strong> characters and a maximum of 24</p><br />
+												<form onSubmit={changePassword}>
 													<label htmlFor="cpp__current-password">Current Password</label><br />
-													<input type="password" name="current_password" id="ccp__current-password" className="p-1" required /><br />
+													<input type="password" name="current_password" id="ccp__current-password" className="p-1" 
+														onChange={e => setCurPassword(e.target.value)} required /><br />
 
 													<label htmlFor="ccp__new-password">New Password</label><br />
-													<input type="password" name="new_password" id="ccp__new-password" className="p-1" required /><br />
+													<input type="password" name="new_password" id="ccp__new-password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,24}$" className="p-1" 
+														onChange={e => setNewPassword(e.target.value)} required /><br />
 
 													<label htmlFor="ccp__confirm-password">Confirm Password</label><br />
-													<input type="password" name="confirm_password" id="ccp__confirm-password" className="p-1" required /><br />
+													<input type="password" name="confirm_password" id="ccp__confirm-password" className="p-1" 
+														onChange={e => setMatchPassword(e.target.value)} required /><br />
 
-													<input type="submit" id="ccp_password__submit" className="cta-red inline mt-5" value="Save" />
+													<input type="submit" id="ccp_password__submit" onClick={() => {setErrMsg(''); setSuccMsg('')}} className="cta-red inline mt-5" value="Save" />
 												</form>
 											</>
 										: location === 'premium' ?

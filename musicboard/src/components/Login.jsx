@@ -1,9 +1,8 @@
 // Login
 
-import { useRef, useState, useEffect, useContext } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import betterLog from '../utilities/betterLog'
 import { Link, useNavigate, Navigate } from 'react-router-dom'
-import AuthContext from '.././context/AuthProvider'
 import authService from '../utilities/authService'
 
 const 
@@ -17,9 +16,6 @@ const
 
 		const 
 			navigate = useNavigate(),
-
-			// Global state variables
-			// { setAuth } = useContext(AuthContext),
 
 			// State variables
 			[email, setEmail] = useState(''),
@@ -44,7 +40,6 @@ const
 				log(response)
             if (response.request.status === 200 && response.data.status === 'success') {
 					const accessToken = response?.data.accessToken
-					// setAuth({ email, pwd, accessToken })
 					setEmail("")
 					setPwd("")
 					setLoggedIn(true)
