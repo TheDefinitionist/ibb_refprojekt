@@ -51,45 +51,33 @@ class AccountController extends Controller
      */
     public function updateUsername(Request $request, $id)
     {
-        
-
-        $user = User::find(Auth::user()->id);
-
-        // if ($auth->id == $user->id) {
-            
-
-            try {
-
-                //DB::update("UPDATE users SET name = 'Josef' WHERE id = 22"); 
-                if ($user) {
-
-                    $validate = $request->validate([
-                        'name' => 'required|string|max:255|min:3'
-                    ]);
-
-                    $user->name = $request['name'];
-                    
-                    if ($user->save()) {
-                        return response()->json([
-                            'status' => 'success',
-                            'message' => 'Successfully updated the username',
-                            'user' => $user
-                        ]);
-                    }
-                }
-            } catch (Exception $e) {
-                dd($e->getMessage());
+        try {
+            $user = User::find(Auth::user()->id);
+            if ($user) {
+                $request->validate([
+                    'name' => 'required|string|max:255|min:3'
+                ]);       
+                DB::update(
+                    "UPDATE `users` SET `name` = :name WHERE `id` = :id", 
+                    [$request->name, $request->id]
+                ); 
+                
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Successfully updated the username',
+                    'user' => $user
+                ]);
+            } else {
                 return response()->json([
                     'status' => 'error',
-                    'message' => $e->getMessage()
+                    'message' => "A user is not eligible to update other user's data"
                 ]);
             }
-
-        // } else {
-        //     return response()->json([
-        //         'status' => 'error',
-        //         'message' => "A user is not eligible to update other user's data"
-        //     ]);
-        // }
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

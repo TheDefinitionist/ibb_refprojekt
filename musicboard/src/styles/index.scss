@@ -102,6 +102,8 @@ header {
 	@apply py-20;
 
 	.section__headline { @apply text-3xl font-medium mb-2 text-gray-900 }
+	.errmsg { @apply text-red-600 bg-red-100 border-2 border-red-500 p-2 mb-2 }
+	.succmsg { @apply text-green-600 bg-green-100 border-2 border-green-500 p-2 mb-2 }
 
 	// News
 	.news {
@@ -205,8 +207,6 @@ header {
 	.login, .register, .forgotpw, .resetpw {
 		display: flex;
 		gap: 15px;
-		.errmsg { @apply text-red-600 bg-red-100 border-2 border-red-500 p-2 mb-2 }
-		.succmsg { @apply text-green-600 bg-green-100 border-2 border-green-500 p-2 mb-2 }
 		&__form { 
 			display: grid;
 			grid-template-columns: 250px;
