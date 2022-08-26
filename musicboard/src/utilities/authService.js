@@ -120,10 +120,8 @@ const register = async (name, email, password) => {
 	},
 
 	updateUsername = async (username) => {
-
 		try {
 			const userID = await restApi.get("/me")
-
 			return await restApi
 				.put("/updateusername/"+userID.data.user.id, {
 					name: username
@@ -142,15 +140,35 @@ const register = async (name, email, password) => {
 		} 
 	},
 
-	//refresh = () => {},
+	updateEmail = async (email) => {
+		try {
+			const userID = await restApi.get("/me")
+			return await restApi
+				.put("/updateemail/"+userID.data.user.id, {
+					email: email
+				})
+				.then((response) => {
+					log(response)
+					return response
+				})
+				.catch((err) => {
+					log(err)
+					return err
+				})
+		} catch (err) {
+			log(err)
+			return err
+		} 
+	},
 
 	logout = () => {
-		localStorage.clear() && sessionStorage.clear()
-		if (!localStorage.getItem(LOCAL_USER) && !localStorage.getItem(LOCAL_EMAIL) && !localStorage.getItem(LOCAL_REGDATE)) log("Storage items successfully removed.")
+		if (localStorage.clear() && sessionStorage.clear()) {
+			log("Storage items successfully removed.")
+		}
 	},
 
 	authService = {
-		register, login, isUser, me, forgotPw, resetPw, updateUsername, logout
+		register, login, isUser, me, forgotPw, resetPw, updateUsername, updateEmail, logout
 	}
 
 export default authService

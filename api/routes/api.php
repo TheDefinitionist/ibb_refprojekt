@@ -37,6 +37,7 @@ Route::controller(AuthController::class)->group(function () {
 // Routes for the customer account panel
 Route::controller(AccountController::class)->group(function () {
     Route::put('updateusername/{id}', 'updateUsername');
+    Route::put('updateemail/{id}', 'updateEmail');
 });
 
 

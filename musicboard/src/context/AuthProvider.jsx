@@ -22,8 +22,9 @@ const AuthContext = createContext({})
 
 export const AuthProvider = ({ children }) => {
    const [ctxUsername, setCtxUsername] = useState(JSON.parse(localStorage.getItem('mb-user')) || false)
+   const [ctxEmail, setCtxEmail] = useState(JSON.parse(localStorage.getItem('mb-user-email')) || false)
    
-   return <AuthContext.Provider value={{ ctxUsername, setCtxUsername }}>
+   return <AuthContext.Provider value={{ ctxUsername, setCtxUsername, ctxEmail, setCtxEmail }}>
       { children }
    </AuthContext.Provider>
 }

@@ -43,7 +43,7 @@ class AccountController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the username.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -65,6 +65,45 @@ class AccountController extends Controller
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Successfully updated the username',
+                    'user' => $user
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => "A user is not eligible to update other user's data"
+                ]);
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+    
+    /**
+     * Update the email.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateEmail(Request $request, $id)
+    {
+        try {
+            $user = User::find(Auth::user()->id);
+            if ($user) {
+                $request->validate([
+                    'email' => 'required|email|string|max:255|unique:users'
+                ]);       
+                DB::update(
+                    "UPDATE `users` SET `email` = :email WHERE `id` = :id", 
+                    ["email" => $request->email, "id" => $request->id]
+                ); 
+                
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Successfully updated the email address',
                     'user' => $user
                 ]);
             } else {

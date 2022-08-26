@@ -25,6 +25,7 @@ const
 
 		const
 			{ ctxUsername, setCtxUsername } = useContext(AuthContext),
+			{ ctxEmail, setCtxEmail } = useContext(AuthContext),
 			userData = key => JSON.parse(localStorage.getItem(key)),
 
 			token = userData('mb-user-token'),
@@ -59,6 +60,24 @@ const
 				if (response.status === 200) {
 					if (response.data.status === 'success') {
 						setUsername(e.target.value)
+						setSuccMsg(response.data.message)
+					} else setErrMsg(response.data.message) 
+				} else if (response.request.status === 422) setErrMsg(response.request.status.message)
+				else setErrMsg('Unexpected error. Please try again.')
+				log(response)
+			} catch (error) {
+				log(error)
+			}
+		}
+
+		const changeEmail = async (e) => {
+			e.preventDefault()
+			try {
+				const response = await authService.updateEmail(ctxEmail)
+				await authService.me()
+				if (response.status === 200) {
+					if (response.data.status === 'success') {
+						setEmail(e.target.value)
 						setSuccMsg(response.data.message)
 					} else setErrMsg(response.data.message) 
 				} else if (response.request.status === 422) setErrMsg(response.request.status.message)
@@ -109,7 +128,7 @@ const
 													</ul>
 													<ul>
 														<li><strong>{username || ctxUsername}</strong></li>
-														<li><strong>{email}</strong></li>
+														<li><strong>{email || ctxEmail}</strong></li>
 														<li><strong>{regDate}</strong></li>
 														<li><strong>{subscribed}</strong></li>
 														<li><strong>{darkMode ? 'Enabled' : 'Disabled'}</strong></li>
@@ -120,21 +139,24 @@ const
 											<>
 												<h3 className="text-[1em] font-bold uppercase">Change Username</h3><br />
 												<p>Your current username: <span className="current-creds">{username || ctxUsername}</span></p><br />
-												<p>To change your username it must be unique and must contain at least 3 characters</p><br />
+												<p>To change your username it must contain at least 3 characters</p><br />
 												<form onSubmit={changeUsername}>
 													<label htmlFor="ccp__username">Username</label><br />
-													<input type="text" name="username" id="ccp__username" className="p-1" required onChange={e => setCtxUsername(e.target.value)}/><br />
+													<input type="text" name="username" id="ccp__username" className="p-1" required 
+														onChange={e => setCtxUsername(e.target.value)}/><br />
 													<input type="submit" id="ccp_username__submit" onClick={() => {setErrMsg(''); setSuccMsg('')}} className="cta-red inline mt-5" value="Update" />
 												</form>
 											</>
 										: location === 'change-email' ?
 											<>
 												<h3 className="text-[1em] font-bold uppercase">Change Email Address</h3><br />
-												<p>Your current email address: <span className="current-creds"></span></p><br />
-												<form>
+												<p>Your current email address: <span className="current-creds">{email || ctxEmail }</span></p><br />
+												<p>To change your email address it must be unique and must follow the typical email pattern (name@host.com).</p><br />
+												<form onSubmit={changeEmail}>
 													<label htmlFor="ccp__mail">Email Address</label><br />
-													<input type="email" name="email" id="ccp__email" className="p-1" required /><br />
-													<input type="submit" id="ccp_email__submit" className="cta-red inline mt-5" value="Save" />
+													<input type="email" name="email" id="ccp__email" className="p-1" required 
+														onChange={e => setCtxEmail(e.target.value)}/><br />
+													<input type="submit" id="ccp_email__submit" onClick={() => {setErrMsg(''); setSuccMsg('')}} className="cta-red inline mt-5" value="Update" />
 												</form>
 											</>
 										: location === 'change-password' ?
